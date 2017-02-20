@@ -17,6 +17,7 @@ import money.com.gettingmoney.fragment.HomeFragment;
 import money.com.gettingmoney.fragment.MarketFragment;
 import money.com.gettingmoney.fragment.MyFragment;
 import money.com.gettingmoney.fragment.TransacationFragment;
+import money.com.gettingmoney.util.MyAppApiConfig;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -38,7 +39,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        MyAppApiConfig.MAIN_ACTIVITY = this;
         initView();
     }
 
@@ -80,7 +81,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         trans.replace(R.id.main_fragment, homeFragment);
         trans.commit();
         home_text.setTextColor(getResources().getColor(R.color.text_red));
-
+        home_img.setImageResource(R.mipmap.youcailured);
         home_btn.setOnClickListener(this);
         market_btn.setOnClickListener(this);
         transacation_btn.setOnClickListener(this);
@@ -102,7 +103,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 trans.replace(R.id.main_fragment, homeFragment);
                 trans.commit();
-
+                home_img.setImageResource(R.mipmap.youcailured);
+                market_img.setImageResource(R.mipmap.quotes);
+                transacation_img.setImageResource(R.mipmap.transaction);
+                entertainment_img.setImageResource(R.mipmap.entertainment);
+                my_img.setImageResource(R.mipmap.mine);
                 changtextcolor(0);
                 position=0;
                 break;
@@ -113,7 +118,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 trans.replace(R.id.main_fragment, marketFragment);
                 trans.commit();
-
+                home_img.setImageResource(R.mipmap.youcailu);
+                market_img.setImageResource(R.mipmap.quotesred);
+                transacation_img.setImageResource(R.mipmap.transaction);
+                entertainment_img.setImageResource(R.mipmap.entertainment);
+                my_img.setImageResource(R.mipmap.mine);
                 changtextcolor(1);
                 position=1;
                 break;
@@ -125,7 +134,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 trans.replace(R.id.main_fragment, transacationFragment);
                 trans.commit();
-
+                home_img.setImageResource(R.mipmap.youcailu);
+                market_img.setImageResource(R.mipmap.quotes);
+                transacation_img.setImageResource(R.mipmap.transactionred);
+                entertainment_img.setImageResource(R.mipmap.entertainment);
+                my_img.setImageResource(R.mipmap.mine);
                 changtextcolor(2);
                 position=2;
                 break;
@@ -136,7 +149,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 trans.replace(R.id.main_fragment, entertainmentFragment);
                 trans.commit();
-
+                home_img.setImageResource(R.mipmap.youcailu);
+                market_img.setImageResource(R.mipmap.quotes);
+                transacation_img.setImageResource(R.mipmap.transaction);
+                entertainment_img.setImageResource(R.mipmap.entertainmentred);
+                my_img.setImageResource(R.mipmap.mine);
                 changtextcolor(3);
                 position=3;
                 break;
@@ -147,6 +164,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 trans.replace(R.id.main_fragment, myFragment);
                 trans.commit();
+                home_img.setImageResource(R.mipmap.youcailu);
+                market_img.setImageResource(R.mipmap.quotes);
+                transacation_img.setImageResource(R.mipmap.transaction);
+                entertainment_img.setImageResource(R.mipmap.entertainment);
+                my_img.setImageResource(R.mipmap.minered);
                 changtextcolor(4);
                 position=4;
 

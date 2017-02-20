@@ -62,14 +62,14 @@ public class TextViewTimeCountUtil extends CountDownTimer {
     public void onFinish() {
         if(sta==0) {
             tv.setText("合车剩余时间: 00:00:00");
-            tv.setTextColor(mcontext.getResources().getColor(R.color.text_hui));
+            tv.setTextColor(mcontext.getResources().getColor(R.color.text_999));
         }else if(sta==1){
             tv.setText("获取验证码");
             tv.setClickable(true);
             tv.setBackground(mcontext.getResources().getDrawable(R.drawable.getcode_shape));
         }else{
             tv.setText("倒计时: 00:00:00" );
-            tv.setTextColor(mcontext.getResources().getColor(R.color.text_hui));
+            tv.setTextColor(mcontext.getResources().getColor(R.color.text_999));
         }
 
     }

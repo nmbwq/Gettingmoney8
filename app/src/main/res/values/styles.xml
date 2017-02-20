@@ -19,4 +19,13 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+
+    <style name="clear_animstyle">
+        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
+        <item name="android:windowBackground">@drawable/photo_choose_bg</item>
+        <!-- 背景透明 -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

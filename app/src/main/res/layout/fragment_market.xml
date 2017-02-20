@@ -1,12 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="money.com.gettingmoney.fragment.MarketFragment">
+    android:orientation="vertical"
+    android:background="@color/white">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/home_color">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:text="行情"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/sousuo"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/market_selfchosebtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/market_selfchosetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_centerInParent="true"
+                android:text="自选"/>
+
+            <View
+                android:id="@+id/market_view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/home_color"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/market_indexbtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/market_indextext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_centerInParent="true"
+                android:text="指数"/>
+
+            <View
+                android:id="@+id/market_view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/home_color"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/market_shenzhenbtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/market_shenzhentext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_centerInParent="true"
+                android:text="沪深"/>
+
+            <View
+                android:id="@+id/market_view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/home_color"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/market_platebtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/market_platetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_centerInParent="true"
+                android:text="板块"/>
+
+            <View
+                android:id="@+id/market_view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/home_color"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/market_gangmeibtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/market_gangmeitext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_centerInParent="true"
+                android:text="港美股"/>
+
+            <View
+                android:id="@+id/market_view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/home_color"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <include layout="@layout/fengexian"/>
+
+    <FrameLayout
+        android:id="@+id/market_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+    </FrameLayout>
+</LinearLayout>

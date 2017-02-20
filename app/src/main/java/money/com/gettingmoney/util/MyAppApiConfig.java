@@ -1,6 +1,13 @@
 package money.com.gettingmoney.util;
 
+import android.app.Activity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyAppApiConfig {
+
+    private static List<Activity> activities;
     //外网
     public static final String HOST_URL = "http://101.201.147.52:8071/";
     public static final String IMGHOST_URL = "http://101.201.147.52:8090";
@@ -8,5 +15,36 @@ public class MyAppApiConfig {
 //    public static final String HOST_URL = "http://192.168.0.132:8071/";
 //    public static final String IMGHOST_URL = "http://192.168.0.132:8071";
 
+
+
+    /**
+     * 把Activity放入集合当中，统一管理。
+     *
+     * @param activity 要添加的Activity对象
+     */
+    public static void addActivity(Activity activity) {
+        if (activities == null)
+            activities = new ArrayList<>();
+        activities.add(activity);
+    }
+
+    /**
+     * 关闭集合中所有的activity界面
+     */
+    public static void killAllActivity() {
+        if (activities != null && activities.size() > 0) {
+            for (Activity activity : activities) {
+                activity.finish();
+            }
+        }
+    }
+
+    /**
+     * 关闭应用，关闭所有的界面，并结束进程
+     */
+    public static void closeApplication() {
+        killAllActivity();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
 
 }

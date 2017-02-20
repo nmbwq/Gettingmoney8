@@ -25,4 +25,77 @@
         <attr name="roundWidth" format="dimension" />
         <attr name="roundHeight" format="dimension" />
     </declare-styleable>
+
+    <!--app菜单-->
+    <declare-styleable name="MainMenuItemView">
+        <attr name="menuSelectedImage" format="reference" />
+        <attr name="menuUnselectedImage" format="reference" />
+        <attr name="menuText" format="string" />
+        <attr name="menuSelectedColor" format="color"></attr>
+        <attr name="menuUnselectedColor" format="color"></attr>
+    </declare-styleable>
+
+    <!--进度条加载完成后才显示界面-->
+    <declare-styleable name="ProgressLayout">
+        <attr name="progressBackground" format="color" />
+        <attr name="progress" format="boolean" />
+    </declare-styleable>
+
+    <!--  导航栏头部属性 -->
+    <declare-styleable name="MyToolBar">
+        <attr name="leftBtnIcon" format="reference" />
+        <attr name="rightBtnIcon" format="reference" />
+        <attr name="leftText" format="string" />
+        <attr name="rightText" format="string" />
+        <attr name="titleText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="MyOccupy">
+        <attr name="imgBtnIcon" format="reference" />
+        <attr name="textText" format="string" />
+        <attr name="commitText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageViewByXfermode">
+        <attr name="borderRadius" format="dimension" />
+        <attr name="type">
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!-- 关于地址选择控件 -->
+    <declare-styleable name="NumberPicker">
+        <attr name="normalTextColor" format="color" />
+        <attr name="normalTextSize" format="dimension" />
+        <attr name="selecredTextColor" format="color" />
+        <attr name="selecredTextSize" format="dimension" />
+        <attr name="unitHight" format="dimension" />
+        <attr name="itemNumber" format="integer" />
+        <attr name="lineColor" format="color" />
+        <attr name="maskHight" format="dimension" />
+        <attr name="noEmpty" format="boolean" />
+        <attr name="isEnable" format="boolean" />
+    </declare-styleable>
+
+
+    <!--慕课，自定义属性-->
+    <attr name="progress_unreach_color" format="color"></attr>
+    <attr name="progress_unreach_height" format="dimension"></attr>
+    <attr name="progress_reach_color" format="color"></attr>
+    <attr name="progress_reach_height" format="dimension"></attr>
+    <!--文本与两边的距离-->
+
+    <declare-styleable name="HorizontalProgressbarWithProgress">
+        <attr name="progress_unreach_color"></attr>
+        <attr name="progress_unreach_height"></attr>
+        <attr name="progress_reach_color"></attr>
+        <attr name="progress_reach_height"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressbarWithProgress">
+        <attr name="radius" format="dimension"></attr> <!--半径-->
+    </declare-styleable>
+
+
 </resources>

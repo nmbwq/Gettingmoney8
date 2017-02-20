@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\android\Gettingmoney\libraryPull\src\main\assets"/></dataSet><dataSet config="debug"><source path="D:\android\Gettingmoney\libraryPull\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\android\GettintMoneyProgress\Gettingmoney1\libraryPull\src\main\assets"/><source path="D:\android\GettintMoneyProgress\Gettingmoney1\libraryPull\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\android\GettintMoneyProgress\Gettingmoney1\libraryPull\src\debug\assets"/></dataSet></merger>

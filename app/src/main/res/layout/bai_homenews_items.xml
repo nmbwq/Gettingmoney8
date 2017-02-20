@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp"
+        >
+       <ImageView
+           android:id="@+id/image"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@mipmap/bai_homepage_finance"
+           />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="财经贸易"
+            style="@style/_black_font_16sp"
+            android:layout_toRightOf="@+id/image"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="2dp"
+            />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15:36"
+            style="@style/_999999_font_12sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            />
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="就分手了费劲记录时间粉丝交流交流十分据了解了解了解据了解了解据了解了解交流交流"
+            android:layout_toRightOf="@+id/image"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            style="@style/_666666_font_14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:maxEms="60"
+            />
+
+    </RelativeLayout>
+    <include layout="@layout/sign_line_view"></include>
+</LinearLayout>

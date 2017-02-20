@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
 import money.com.gettingmoney.R;
+import money.com.gettingmoney.bai.main.base.BaseFragment;
+import money.com.gettingmoney.bai.main.base.MyToolBar;
 
-public class TransacationFragment extends Fragment {
+public class TransacationFragment extends BaseFragment {
 
 
     /**
@@ -20,9 +23,19 @@ public class TransacationFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_transacation,null);
+        toolBar = new MyToolBar(getActivity(), "", "交易", "");
+        View view = requestView(inflater, R.layout.fragment_transacation);
+        ButterKnife.inject(this, view);
+        initEvent();
         return view;
     }
 
+    private void initEvent() {
+    }
 
+
+    @Override
+    public void requestInit() {
+        
+    }
 }

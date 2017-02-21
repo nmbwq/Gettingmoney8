@@ -2,6 +2,7 @@ package money.com.gettingmoney.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -103,6 +104,22 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
         position = 0;
         fm = getChildFragmentManager();
         viewpager.setAdapter(new MyFrageStatePagerAdapter(fm));
+        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                chose(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -192,9 +209,13 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
             {
                 return ;
             }
-            chose(viewpager.getCurrentItem());
+
             position=viewpager.getCurrentItem();
         }
 
+        @Override
+        public void restoreState(Parcelable state, ClassLoader loader) {
+//            super.restoreState(state, loader);
+        }
     }
 }

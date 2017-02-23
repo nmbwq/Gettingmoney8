@@ -9,6 +9,7 @@
     <include layout="@layout/head_item"/>
 
     <RelativeLayout
+        android:id="@+id/youcaibi_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="10dp"
@@ -19,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="@color/text_black"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="有财币"/>
@@ -43,6 +45,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/youcaidou_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="0.5dp"
@@ -53,9 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="@color/text_black"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="有财币"/>
+            android:text="有财豆"/>
 
         <ImageView
             android:id="@+id/youcaidou"

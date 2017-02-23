@@ -32,7 +32,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
      * @param savedInstanceState
      */
     private TextView head_title,head_right;
-    private RelativeLayout setpwd_layout,feedback_layout,set_clean,exit_layout;
+    private RelativeLayout setpwd_layout,feedback_layout,set_clean,exit_layout,mybank_layout;
     private PopupWindow selectpoupWindow;
     private LinearLayout parent;
     private File file;
@@ -55,10 +55,13 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
         set_clean = (RelativeLayout) this.findViewById(R.id.set_clean);
         exit_layout = (RelativeLayout) this.findViewById(R.id.exit_layout);
         parent = (LinearLayout) this.findViewById(R.id.parent);
+        mybank_layout = (RelativeLayout) this.findViewById(R.id.mybank_layout);
+
         setpwd_layout.setOnClickListener(this);
         feedback_layout.setOnClickListener(this);
         set_clean.setOnClickListener(this);
         exit_layout.setOnClickListener(this);
+        mybank_layout.setOnClickListener(this);
     }
 
     @Override
@@ -69,6 +72,9 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.feedback_layout:
                 ActivityJump.jumpActivity(SetActivity.this,FeedbackActivity.class);
+                break;
+            case R.id.mybank_layout:
+                ActivityJump.jumpActivity(SetActivity.this,BankCardActivity.class);
                 break;
             case R.id.set_clean:
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {

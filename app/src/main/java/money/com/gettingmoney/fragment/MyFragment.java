@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import money.com.gettingmoney.R;
+import money.com.gettingmoney.activity.AboutActivity;
 import money.com.gettingmoney.activity.CollectActivity;
+import money.com.gettingmoney.activity.HelpcenterActivity;
 import money.com.gettingmoney.activity.MywalletActivity;
 import money.com.gettingmoney.activity.SetActivity;
 import money.com.gettingmoney.app.MoneyApplication;
@@ -65,10 +67,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 ActivityJump.jumpActivity(getActivity(), CollectActivity.class);
                 break;
             case R.id.myabout_btn:
-
+                ActivityJump.jumpActivity(getActivity(), AboutActivity.class);
                 break;
             case R.id.myhelpcenter_btn:
-
+                ActivityJump.jumpActivity(getActivity(), HelpcenterActivity.class);
                 break;
             case R.id.myset_btn:
                 ActivityJump.jumpActivity(getActivity(), SetActivity.class);

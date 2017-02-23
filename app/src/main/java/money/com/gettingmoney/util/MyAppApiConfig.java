@@ -1,6 +1,9 @@
 package money.com.gettingmoney.util;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,12 @@ public class MyAppApiConfig {
     public static void closeApplication() {
         killAllActivity();
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+//拨打电话
+    public static void call(Context context,String phone) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 }

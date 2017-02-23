@@ -154,6 +154,50 @@ public abstract class BaseActivity extends FragmentActivity {
         win.setAttributes(winParams);
     }
 
+
+//    public void showBlackDialog() {
+//        if (hud != null) {
+//            hud.show();
+//        }
+//    }
+//
+//    public void dismissBlackDialog() {
+//        if (hud != null&&hud.isShowing()) {
+//            hud.dismiss();
+//        }
+//    }
+
+    public void showSwipeRefresh(final SwipeRefreshLayout swipeRefreshLayout) {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
+
+    /**
+     * 刷新多少秒后关闭
+     *
+     * @param swipeRefreshLayout
+     * @param time
+     */
+    public void dismissSwipeRefresh(final SwipeRefreshLayout swipeRefreshLayout, long time) {
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, time);
+    }
+
+    public void dismissSwipeRefresh(final SwipeRefreshLayout swipeRefreshLayout) {
+        if (swipeRefreshLayout != null)
+            dismissSwipeRefresh(swipeRefreshLayout, 1000);
+    }
+
+
+
     /**
      * @param layoutId
      * @param type     1代表无占位图，0代表有展位图
@@ -194,7 +238,8 @@ public abstract class BaseActivity extends FragmentActivity {
             linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ZhUtils.getStatusBarHeight(this)));
             linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.statusBarColor));
             vLayout.addView(toolBar, 0);
-            vLayout.addView(linearLayout, 0);
+//            不添加statebar的高度
+//            vLayout.addView(linearLayout, 0);
             toolBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

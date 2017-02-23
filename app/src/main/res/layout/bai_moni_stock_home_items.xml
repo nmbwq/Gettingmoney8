@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+     >
+     <TextView
+         android:id="@+id/tv_xianshi"
+         android:layout_width="10dp"
+         android:layout_height="match_parent"
+         android:layout_marginBottom="5dp"
+         android:layout_marginTop="5dp"
+         android:background="@drawable/bai_white_shape"
+         />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="信鸽投资   （600069）"
+                style="@style/_black_font_16sp"
+                />
+           </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="盈亏："
+                    style="@style/_999999_font_16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="425.03   （0.4%）"
+                    android:layout_marginLeft="10dp"
+                    style="@style/_e93030_font_16sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="现价："
+                    style="@style/_999999_font_16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11.15   （—0.4%）"
+                    android:layout_marginLeft="10dp"
+                    style="@style/_069043_font_16sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_ishiden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                >
+
+            <LinearLayout
+                android:id="@+id/ll_chengben"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="成本："
+                    style="@style/_999999_font_16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11.15"
+                    android:layout_marginLeft="10dp"
+                    style="@style/_black_font_16sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_chigu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="持股："
+                    style="@style/_999999_font_16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9000   （可买9000）"
+                    android:layout_marginLeft="10dp"
+                    style="@style/_black_font_16sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_shizhi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="市值："
+                    style="@style/_999999_font_16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="101250.00"
+                    android:layout_marginLeft="10dp"
+                    style="@style/_black_font_16sp"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="买涨"
+                    android:gravity="center"
+                    style="@style/_4087f5_font_14sp"
+                    android:background="@drawable/bai_select_shape"
+                    android:layout_marginLeft="10dp"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="买跌"
+                    android:gravity="center"
+                    style="@style/_4087f5_font_14sp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/bai_select_shape"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="平仓"
+                    android:gravity="center"
+                    style="@style/_4087f5_font_14sp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/bai_select_shape"
+
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="行情"
+                    android:gravity="center"
+                    style="@style/_4087f5_font_14sp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/bai_select_shape"
+
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="明细"
+                    android:gravity="center"
+                    style="@style/_4087f5_font_14sp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/bai_select_shape"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+            android:id="@+id/im_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/juxing"
+            android:layout_gravity="right"
+            android:paddingRight="12dp"
+            android:layout_marginBottom="5dp"
+            />
+    <include layout="@layout/sign_line_view"></include>
+</LinearLayout>

@@ -40,11 +40,9 @@
     <color name="color_f6f6">#f6f6f6</color>
     <color name="toolBarColor">#E93030</color>
     <color name="themeColor">#E93030</color>
-    <color name="statusBarColor">#f6f6f6</color>
-
-
-
-
-
+    <color name="statusBarColor">#e93030</color>
+    <color name="_e93030">#e93030</color>
+    <color name="_069043">#069043</color>
+    <color name="_4087f5">#4087f5</color>
 
 </resources>

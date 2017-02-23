@@ -1,10 +1,12 @@
 package money.com.gettingmoney.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,8 +21,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-
 import money.com.gettingmoney.R;
+import money.com.gettingmoney.bai.activity.BusinessNewsActivity;
 import money.com.gettingmoney.bai.main.adapter.CommonAdapter;
 import money.com.gettingmoney.bai.main.adapter.ViewHolder;
 import money.com.gettingmoney.bai.main.base.BaseFragment;
@@ -83,6 +85,13 @@ public class HomeFragment extends BaseFragment {
             }
         };
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastUtils.MyToast(getActivity(),"进行点击操作");
+                startActivity(new Intent(getActivity(), BusinessNewsActivity.class));
+            }
+        });
         //刷拉刷新
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.themeColor));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -106,15 +115,15 @@ public class HomeFragment extends BaseFragment {
                 SimpleDraweeView view = (SimpleDraweeView)baseViewHolder.getView(R.id.im_zujian_photo);
                 view.setImageURI(item.getPhotoUrl());
                 baseViewHolder.setText(R.id.im_zujian_name,  item.getName());
-                baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtils.MyToast(getActivity(), "点击item");
-                    }
-                });
+//                baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                    }
+//                });
             }
         };
         mZuJianList.setAdapter(ZmAdapter);
+
 
     }
 

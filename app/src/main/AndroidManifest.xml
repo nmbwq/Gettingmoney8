@@ -57,6 +57,11 @@
         <activity android:name=".activity.FeedbackActivity" />
         <activity android:name=".activity.UpdatapwdActivity" />
         <activity android:name=".activity.SigninActivity"></activity>
+
+
+        <activity android:name=".bai.activity.BusinessNewsActivity" />
+        <activity android:name=".bai.activity.MoniStockHomeActivity" />
+        <activity android:name=".bai.activity.MoniAllActivity" />
     </application>
 
 </manifest>

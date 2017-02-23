@@ -56,7 +56,15 @@
         <activity android:name=".activity.BalanceActivity" />
         <activity android:name=".activity.FeedbackActivity" />
         <activity android:name=".activity.UpdatapwdActivity" />
-        <activity android:name=".activity.SigninActivity"></activity>
+        <activity android:name=".activity.SigninActivity" />
+        <activity android:name=".activity.BuycoinActivity" />
+        <activity android:name=".activity.BuybeanActivity" />
+        <activity android:name=".activity.PaychoseActivity" />
+        <activity android:name=".activity.BankCardActivity" />
+        <activity android:name=".activity.AddBankcardActivity" />
+        <activity android:name=".activity.WritecodeActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.HelpcenterActivity"/>
 
 
         <activity android:name=".bai.activity.BusinessNewsActivity" />

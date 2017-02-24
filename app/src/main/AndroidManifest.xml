@@ -65,8 +65,6 @@
         <activity android:name=".activity.WritecodeActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.HelpcenterActivity"/>
-
-
         <activity android:name=".bai.activity.BusinessNewsActivity" />
         <activity android:name=".bai.activity.MoniStockHomeActivity" />
         <activity android:name=".bai.activity.MoniAllActivity" />

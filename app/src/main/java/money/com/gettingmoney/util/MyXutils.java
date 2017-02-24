@@ -98,13 +98,13 @@ public class MyXutils {
      * @param maps
      * @param callback
      */
-    public void post(final LoadingDialog dialog,String url, Map<String, String> maps, final XCallBack callback) {
+    public void post(final LoadingDialog dialog,String url, Map<String, Object> maps, final XCallBack callback) {
 
         RequestParams params = new RequestParams(url);
         params.setAsJsonContent(true);
         JSONObject json = new JSONObject();
         if (maps != null && !maps.isEmpty()) {
-            for (Map.Entry<String, String> entry : maps.entrySet()) {
+            for (Map.Entry<String, Object> entry : maps.entrySet()) {
                 try {
                     json.put(entry.getKey(),entry.getValue());
                 } catch (JSONException e) {

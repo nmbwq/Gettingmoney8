@@ -36,6 +36,7 @@
         android:src="@mipmap/login_text"/>
 
             <EditText
+                android:id="@+id/login_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
@@ -54,6 +55,7 @@
                 android:layout_marginTop="19dp"/>
 
             <EditText
+                android:id="@+id/login_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"

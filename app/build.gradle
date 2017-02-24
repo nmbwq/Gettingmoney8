@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //要和compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'一起添加 MPAndroidChart才可以使用
+    allprojects {
+        repositories {
+            jcenter()
+            maven { url "https://jitpack.io" }
+        }
+    }
 }
 
 dependencies {
@@ -31,4 +39,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.alibaba:fastjson:1.2.8'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
 }

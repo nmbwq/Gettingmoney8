@@ -70,6 +70,9 @@
         <activity android:name=".bai.activity.BusinessNewsActivity" />
         <activity android:name=".bai.activity.MoniStockHomeActivity" />
         <activity android:name=".bai.activity.MoniAllActivity" />
+        <activity android:name=".bai.activity.MoniDetailActivity" />
+        <activity android:name=".bai.activity.CJorWTActivity" />
+        <activity android:name=".bai.activity.NewsDetailActivity" />
     </application>
 
 </manifest>

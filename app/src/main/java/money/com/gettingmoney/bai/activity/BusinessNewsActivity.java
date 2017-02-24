@@ -1,9 +1,11 @@
 package money.com.gettingmoney.bai.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -90,6 +92,12 @@ public class BusinessNewsActivity extends BaseActivity /*implements OnActionList
 
         };
         mLvShopMore.setAdapter(mAdapter);
+        mLvShopMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity( new Intent(BusinessNewsActivity.this,NewsDetailActivity.class));
+            }
+        });
 //
 //        //下拉刷新
 //        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.themeColor));

@@ -49,7 +49,7 @@ public class HomeFragment extends BaseFragment {
     private CommonAdapter<homeNews> mAdapter;
     private List<homeNews> mList;
     private CommonAdapter<zuJianModel> ZmAdapter;
-    private List<zuJianModel> ZmList = new ArrayList<>();
+    private List<zuJianModel> ZmList ;
 
     public HomeFragment() {
     }
@@ -73,6 +73,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initEvent() {
+        ZmList=new ArrayList<>();
         mList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             homeNews homenews = new homeNews();

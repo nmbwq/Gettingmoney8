@@ -45,7 +45,7 @@ public class MoniChiFragment extends BaseFragment /*implements OnActionListener*
 
     //适配器
     private CommonAdapter<MoniStockHomeModel> mAdapter;
-    private List<MoniStockHomeModel> mList = new ArrayList<>();
+    private List<MoniStockHomeModel> mList ;
 
     private boolean isHasData = false;//是否有数据
     private boolean isLoading;//是否刷新中
@@ -87,6 +87,7 @@ public class MoniChiFragment extends BaseFragment /*implements OnActionListener*
     }
 
     private void initEvent() {
+        mList=new ArrayList<>();
 //        requestData();
         for (int i = 0; i < 5; i++) {
             MoniStockHomeModel MoniStockHomeModel = new MoniStockHomeModel();

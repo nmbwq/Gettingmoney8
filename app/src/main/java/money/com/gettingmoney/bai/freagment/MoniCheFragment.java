@@ -44,7 +44,7 @@ public class MoniCheFragment extends BaseFragment /*implements OnActionListener*
 
     //适配器
     private CommonAdapter<MoniCheModel> mAdapter;
-    private List<MoniCheModel> mList = new ArrayList<>();
+    private List<MoniCheModel> mList ;
 
 
     private boolean isHasData = false;//是否有数据
@@ -88,6 +88,7 @@ public class MoniCheFragment extends BaseFragment /*implements OnActionListener*
     }
 
     private void initEvent() {
+        mList=new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             MoniCheModel MoniCheModel = new MoniCheModel();
             mList.add(MoniCheModel);

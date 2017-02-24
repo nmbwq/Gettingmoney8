@@ -27,6 +27,9 @@ import money.com.gettingmoney.bai.main.utils.ZhUtils;
 import money.com.gettingmoney.bai.main.view.ProgressLayout;
 
 import static money.com.gettingmoney.R.id.tv_che;
+import static money.com.gettingmoney.R.id.tv_chi;
+import static money.com.gettingmoney.R.id.tv_die;
+import static money.com.gettingmoney.R.id.tv_select;
 import static money.com.gettingmoney.R.id.tv_zhang;
 
 
@@ -45,13 +48,13 @@ public class MoniAllActivity extends BaseActivity {
     ViewPager mViewPager;
     @InjectView(tv_zhang)
     TextView tvZhang;
-    @InjectView(R.id.tv_die)
+    @InjectView(tv_die)
     TextView tvDie;
-    @InjectView(R.id.tv_chi)
+    @InjectView(tv_chi)
     TextView tvChi;
     @InjectView(tv_che)
     TextView tvChe;
-    @InjectView(R.id.tv_select)
+    @InjectView(tv_select)
     TextView tvSelect;
     //用来确定跳那个界面的
     int  type=2;
@@ -92,7 +95,7 @@ public class MoniAllActivity extends BaseActivity {
         mAdapter = new MoniAllFragmentAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);
         //默认为1加载两个页面    为2的话加载三个页面
-        mViewPager.setOffscreenPageLimit(0);
+        mViewPager.setOffscreenPageLimit(5);
         //跳转到什么界面
         mViewPager.setCurrentItem(type);
 
@@ -100,18 +103,38 @@ public class MoniAllActivity extends BaseActivity {
        switch (type){
            case 0:
                tvZhang.setTextColor(getResources().getColor(R.color._e93030));
+               tvDie.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChe.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChi.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvSelect.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
                break;
            case 1:
                tvDie.setTextColor(getResources().getColor(R.color._e93030));
+               tvZhang.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChe.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChi.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvSelect.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
                break;
            case 2:
                tvChi.setTextColor(getResources().getColor(R.color._e93030));
+               tvZhang.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChe.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvDie.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvSelect.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
                break;
            case 3:
                tvChe.setTextColor(getResources().getColor(R.color._e93030));
+               tvZhang.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvDie.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChi.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvSelect.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
                break;
            case 4:
                tvSelect.setTextColor(getResources().getColor(R.color._e93030));
+               tvZhang.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChe.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvChi.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
+               tvDie.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.black));
                break;
 
        }
@@ -147,7 +170,6 @@ public class MoniAllActivity extends BaseActivity {
                     case 4:
                         setTextColor(tvSelect.getId());
                         break;
-
                 }
             }
 
@@ -165,18 +187,31 @@ public class MoniAllActivity extends BaseActivity {
         switch (id) {
             case tv_zhang:
                 tvZhang.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
+
+                textViewId=tv_zhang;
                 break;
-            case R.id.tv_die:
+            case tv_die:
                 tvDie.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
+
+                textViewId=tv_die;
+
                 break;
-            case R.id.tv_chi:
+            case tv_chi:
                 tvChi.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
+
+                textViewId=tv_chi;
+
                 break;
             case tv_che:
                 tvChe.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
+
+                textViewId=tv_che;
+
                 break;
-            case R.id.tv_select:
+            case tv_select:
                 tvSelect.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
+
+                textViewId=tv_select;
                 break;
         }
     }
@@ -192,7 +227,7 @@ public class MoniAllActivity extends BaseActivity {
 //        ButterKnife.reset(this);
 //    }
 
-    @OnClick({tv_zhang, R.id.tv_die, R.id.tv_chi, tv_che,R.id.tv_select})
+    @OnClick({R.id.tv_zhang, tv_die, tv_chi, tv_che, tv_select})
     public void onClick(View view) {
         switch (view.getId()) {
             //我的收藏
@@ -205,20 +240,20 @@ public class MoniAllActivity extends BaseActivity {
                 }
                 break;
             //我当关注
-            case R.id.tv_die:
-                if (textViewId != R.id.tv_die) {
+            case tv_die:
+                if (textViewId != tv_die) {
                     refreshAllColor();
                     tvDie.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
                     mViewPager.setCurrentItem(1);
-                    textViewId = R.id.tv_die;
+                    textViewId = tv_die;
                 }
                 break;
-            case R.id.tv_chi:
-                if (textViewId != R.id.tv_chi) {
+            case tv_chi:
+                if (textViewId != tv_chi) {
                     refreshAllColor();
                     tvChi.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
                     mViewPager.setCurrentItem(2);
-                    textViewId = R.id.tv_chi;
+                    textViewId = tv_chi;
                 }
                 break;
             case tv_che:
@@ -229,12 +264,12 @@ public class MoniAllActivity extends BaseActivity {
                     textViewId = tv_che;
                 }
                 break;
-            case R.id.tv_select:
-                if (textViewId != R.id.tv_select) {
+            case tv_select:
+                if (textViewId != tv_select) {
                     refreshAllColor();
                     tvSelect.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));
                     mViewPager.setCurrentItem(4);
-                    textViewId = R.id.tv_select;
+                    textViewId = tv_select;
                 }
                 break;
 

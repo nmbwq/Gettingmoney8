@@ -45,7 +45,6 @@ public class TransacationFragment extends BaseFragment {
         toolBar = new MyToolBar(getActivity(), "", "交易", "");
         View view = requestView(inflater, R.layout.fragment_transacation);
         ButterKnife.inject(this, view);
-
         initEvent();
         return view;
     }

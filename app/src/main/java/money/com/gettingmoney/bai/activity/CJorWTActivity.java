@@ -1,15 +1,9 @@
 package money.com.gettingmoney.bai.activity;
 
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,30 +13,32 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import money.com.gettingmoney.R;
-import money.com.gettingmoney.bai.Butils.BDialog;
 import money.com.gettingmoney.bai.main.adapter.CommonAdapter;
 import money.com.gettingmoney.bai.main.adapter.ViewHolder;
 import money.com.gettingmoney.bai.main.base.BaseActivity;
 import money.com.gettingmoney.bai.main.base.MyToolBar;
 import money.com.gettingmoney.bai.main.view.ProgressLayout;
-import money.com.gettingmoney.bai.model.MoniStockHomeModel;
+import money.com.gettingmoney.bai.model.CJorWTModel;
 
 
-public class MoniStockHomeActivity extends BaseActivity /*implements OnActionListener */ {
+public class CJorWTActivity extends BaseActivity /*implements OnActionListener */ {
+    public static final String DISTINGUISH = "DISTINGUISH";
+
     @InjectView(R.id.mLvShopMore)
     ListView mLvShopMore;
     @InjectView(R.id.srl_message)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
+    @InjectView(R.id.tv_qubie)
+    TextView tvQubie;
 
 
     //
 //适配器
-    private CommonAdapter<MoniStockHomeModel> mAdapter;
-    private List<MoniStockHomeModel> mList = new ArrayList<>();
+    private CommonAdapter<CJorWTModel> mAdapter;
+    private List<CJorWTModel> mList = new ArrayList<>();
 
     private boolean isHasData = false;//是否有数据
     private boolean isLoading;//是否刷新中
@@ -64,13 +60,19 @@ public class MoniStockHomeActivity extends BaseActivity /*implements OnActionLis
      */
     private int num = 10;
     private boolean isFirst = true;//是否是第一次请求，控制footer只创建一次。
-    private AlertDialog alertDialog;
+    int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolBar = new MyToolBar(this, R.mipmap.bai_back, "模拟股票资产", "");
-        setContentView(requestView(R.layout.bai_moni_stock_home));
+        type = getIntent().getIntExtra(DISTINGUISH, 0);
+        if (type == 1) {
+            toolBar = new MyToolBar(this, R.mipmap.bai_back, "模拟交易当日成交", "");
+        } else {
+            toolBar = new MyToolBar(this, R.mipmap.bai_back, "模拟交易当日委托", "");
+        }
+
+        setContentView(requestView(R.layout.bai_moni_che));
         ButterKnife.inject(this);
         initEvent();
 
@@ -79,51 +81,31 @@ public class MoniStockHomeActivity extends BaseActivity /*implements OnActionLis
     private void initEvent() {
         //进来时候的加载的转转 代替
 //        showSwipeRefresh(mSwipeRefreshLayout);//显示加载
-//        requestData();
+//        requeata();
+        if (type==1){
+            tvQubie.setText("方向/成交额");
+        }else {
+            tvQubie.setText("交易状态");
+        }
+
         for (int i = 0; i < 5; i++) {
-            MoniStockHomeModel MoniStockHomeModel = new MoniStockHomeModel();
-            mList.add(MoniStockHomeModel);
+            CJorWTModel CJorWTModel = new CJorWTModel();
+            mList.add(CJorWTModel);
         }
         //列表
         footer = LayoutInflater.from(this).inflate(R.layout.zhang_footer_listivew, null);
         mLlFooter = (LinearLayout) footer.findViewById(R.id.mLlFooter);
         mTxtFooter = (TextView) footer.findViewById(R.id.mTxtFooter);
 
-        mAdapter = new CommonAdapter<MoniStockHomeModel>(MoniStockHomeActivity.this, mList, R.layout.bai_moni_stock_home_items) {
+        mAdapter = new CommonAdapter<CJorWTModel>(CJorWTActivity.this, mList, R.layout.bai_moni_che_item) {
             @Override
-            public void convert(ViewHolder baseViewHolder, final MoniStockHomeModel item) {
-                final LinearLayout linearLayout = (LinearLayout) baseViewHolder.getView(R.id.ll_ishiden);
-                final ImageView imageView = (ImageView) baseViewHolder.getView(R.id.im_image);
-                final TextView textView = (TextView) baseViewHolder.getView(R.id.tv_xianshi);
-                // 形状不变  改变背景颜色
-                final GradientDrawable p = (GradientDrawable) textView.getBackground();
-
-                if (item.isFlag()) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                    imageView.setVisibility(View.GONE);
-                    p.setColor(getResources().getColor(R.color._069043));
-                } else {
-                    linearLayout.setVisibility(View.GONE);
-                    imageView.setVisibility(View.VISIBLE);
-                    p.setColor(getResources().getColor(R.color.text_red));
+            public void convert(ViewHolder baseViewHolder, CJorWTModel item) {
+                TextView view = (TextView)baseViewHolder.getView(R.id.tv_time);
+                if (type==1){
+                    view.setText("125.0");
+                }else {
+                    view.setText("完成");
                 }
-                baseViewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (item.isFlag()) {
-                            item.setFlag(false);
-                            linearLayout.setVisibility(View.GONE);
-                            imageView.setVisibility(View.VISIBLE);
-//                            p.setColor(getResources().getColor(R.color.text_red));
-                        } else {
-                            item.setFlag(true);
-                            linearLayout.setVisibility(View.VISIBLE);
-                            imageView.setVisibility(View.GONE);
-//                            p.setColor(getResources().getColor(R.color._069043));
-                        }
-                    }
-                });
-
             }
 
 
@@ -322,38 +304,6 @@ public class MoniStockHomeActivity extends BaseActivity /*implements OnActionLis
     public void onPause() {
         super.onPause();
 //        MobclickAgent.onPause(this);
-    }
-
-
-    @OnClick({R.id.ll_zhang, R.id.ll_die, R.id.ll_chi, R.id.ll_che, R.id.ll_select})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_zhang:
-                startActivity(new Intent(MoniStockHomeActivity.this,MoniAllActivity.class));
-                break;
-            case R.id.ll_die:
-                startActivity(new Intent(MoniStockHomeActivity.this,MoniDetailActivity.class));
-                break;
-            case R.id.ll_chi:
-                alertDialog= BDialog.showDialog(MoniStockHomeActivity.this, R.layout.bai_dialog_pingcang, "", "", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText  editText = (EditText) alertDialog.findViewById(R.id.tv_number);
-                        Log.d("Debug","dialog上面填写的数量为"+editText.getText().toString());
-                        alertDialog.dismiss();
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                    }
-                });
-                break;
-            case R.id.ll_che:
-                break;
-            case R.id.ll_select:
-                break;
-        }
     }
 
 

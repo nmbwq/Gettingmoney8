@@ -1,5 +1,6 @@
 package money.com.gettingmoney.bai.freagment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -13,8 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import money.com.gettingmoney.R;
+import money.com.gettingmoney.bai.activity.CJorWTActivity;
 import money.com.gettingmoney.bai.main.base.BaseFragment;
+import money.com.gettingmoney.bai.main.view.ProgressLayout;
 
 
 /**
@@ -24,8 +29,9 @@ import money.com.gettingmoney.bai.main.base.BaseFragment;
 public class MoniSelectFragment extends BaseFragment /*implements OnActionListener*/ {
 
 
-
     int type;
+    @InjectView(R.id.pl_message)
+    ProgressLayout plMessage;
     private boolean isHasData = false;//是否有数据
     private boolean isLoading;//是否刷新中
 
@@ -68,8 +74,27 @@ public class MoniSelectFragment extends BaseFragment /*implements OnActionListen
     private void initEvent() {
 
     }
+
     @Override
     public void requestInit() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @OnClick({R.id.rl_cehngjiao, R.id.rl_weituo})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_cehngjiao:
+                startActivity(new Intent(getActivity(), CJorWTActivity.class).putExtra(CJorWTActivity.DISTINGUISH,1));
+                break;
+            case R.id.rl_weituo:
+                startActivity(new Intent(getActivity(), CJorWTActivity.class).putExtra(CJorWTActivity.DISTINGUISH,2));
+                break;
+        }
     }
 }

@@ -4,13 +4,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,12 +18,15 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.bai.main.adapter.CommonAdapter;
 import money.com.gettingmoney.bai.main.adapter.ViewHolder;
 import money.com.gettingmoney.bai.main.base.BaseFragment;
 import money.com.gettingmoney.bai.main.view.ProgressLayout;
+import money.com.gettingmoney.bai.main.view.StretchScrollView;
 import money.com.gettingmoney.bai.model.MoniStockHomeModel;
+import money.com.gettingmoney.bai.view.ListViewForScrollView;
 
 
 /**
@@ -35,18 +36,33 @@ import money.com.gettingmoney.bai.model.MoniStockHomeModel;
 public class MoniZhangFragment extends BaseFragment /*implements OnActionListener*/ {
 
 
-
     int type;
     @InjectView(R.id.mLvShopMore)
-    ListView mLvShopMore;
-    @InjectView(R.id.srl_message)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    ListViewForScrollView mLvShopMore;
+    //    @InjectView(R.id.srl_message)
+//    SwipeRefreshLayout mSwipeRefreshLayout;
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
+    @InjectView(R.id.stretchScrollView)
+    StretchScrollView stretchScrollView;
+    @InjectView(R.id.tv_number)
+    TextView tvNumber;
+    @InjectView(R.id.quancang)
+    TextView quancang;
+    @InjectView(R.id.twocang)
+    TextView twocang;
+    @InjectView(R.id.threecang)
+    TextView threecang;
+    @InjectView(R.id.ll_cang)
+    LinearLayout llCang;
+    @InjectView(R.id.pl_message)
+    ProgressLayout plMessage;
+    //改变背景颜色 不改变背景的形状
+    GradientDrawable gradientDrawable;
 
     //适配器
     private CommonAdapter<MoniStockHomeModel> mAdapter;
-    private List<MoniStockHomeModel> mList = new ArrayList<>();
+    private List<MoniStockHomeModel> mList;
 
     private boolean isHasData = false;//是否有数据
     private boolean isLoading;//是否刷新中
@@ -70,6 +86,10 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
     private boolean isFirst = true;//是否是第一次请求，控制footer只创建一次。
     private Map<TextView, CountDownTimer> leftTimeMap = new HashMap<>();
     private int pos;
+    //买股票的数量
+    int number = 0;
+    // 0 全仓 1 1/2仓 2 1/3仓
+    int cang = -1;
 
     public static MoniZhangFragment getInstance() {
         MoniZhangFragment fragment = new MoniZhangFragment();
@@ -80,7 +100,7 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = requestView(inflater, R.layout.bai_text1);
+        View view = requestView(inflater, R.layout.bai_moni_zhang);
         ButterKnife.inject(this, view);
         initWindow();
         initEvent();
@@ -88,6 +108,11 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
     }
 
     private void initEvent() {
+        //scrollview嵌套listview时候让最上面控件获取焦点
+        progressLayout.setFocusable(true);
+        progressLayout.setFocusableInTouchMode(true);
+        progressLayout.requestFocus();
+        mList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             MoniStockHomeModel MoniStockHomeModel = new MoniStockHomeModel();
             mList.add(MoniStockHomeModel);
@@ -139,8 +164,64 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
         mLvShopMore.setAdapter(mAdapter);
 
     }
+
     @Override
     public void requestInit() {
 
     }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @OnClick({R.id.im_jian, R.id.im_jia, R.id.quancang, R.id.twocang, R.id.threecang})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.im_jian:
+                number = Integer.parseInt(tvNumber.getText().toString().trim());
+                number = number - 1;
+                tvNumber.setText(number + "");
+                break;
+            case R.id.im_jia:
+                number = Integer.parseInt(tvNumber.getText().toString());
+                number = number + 1;
+                tvNumber.setText(number + "");
+                break;
+            case R.id.quancang:
+                quancang.setBackgroundColor(getResources().getColor(R.color._e93030));
+                quancang.setTextColor(getResources().getColor(R.color.white));
+                twocang.setBackgroundColor(getResources().getColor(R.color.white));
+                twocang.setTextColor(getResources().getColor(R.color._e93030));
+                threecang.setBackgroundColor(getResources().getColor(R.color.white));
+                threecang.setTextColor(getResources().getColor(R.color._e93030));
+                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
+                cang = 0;
+                break;
+            case R.id.twocang:
+                twocang.setBackgroundColor(getResources().getColor(R.color._e93030));
+                twocang.setTextColor(getResources().getColor(R.color.white));
+                quancang.setBackgroundColor(getResources().getColor(R.color.white));
+                quancang.setTextColor(getResources().getColor(R.color._e93030));
+                threecang.setBackgroundColor(getResources().getColor(R.color.white));
+                threecang.setTextColor(getResources().getColor(R.color._e93030));
+                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
+                cang = 1;
+                break;
+            case R.id.threecang:
+                threecang.setBackgroundColor(getResources().getColor(R.color._e93030));
+                threecang.setTextColor(getResources().getColor(R.color.white));
+                twocang.setBackgroundColor(getResources().getColor(R.color.white));
+                twocang.setTextColor(getResources().getColor(R.color._e93030));
+                quancang.setBackgroundColor(getResources().getColor(R.color.white));
+                quancang.setTextColor(getResources().getColor(R.color._e93030));
+                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
+                cang = 2;
+                break;
+        }
+    }
+
+
 }

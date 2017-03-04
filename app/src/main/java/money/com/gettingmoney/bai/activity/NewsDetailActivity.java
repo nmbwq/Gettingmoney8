@@ -1,36 +1,56 @@
 package money.com.gettingmoney.bai.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.bai.main.base.BaseActivity;
 import money.com.gettingmoney.bai.main.base.MyToolBar;
+import money.com.gettingmoney.bai.main.utils.ToastUtils;
+import money.com.gettingmoney.bai.main.utils.ZhUtils;
+import money.com.gettingmoney.bai.main.view.ProgressLayout;
 import money.com.gettingmoney.bai.model.NewsComment;
+import money.com.gettingmoney.util.MyXutils;
+import money.com.gettingmoney.webutil.news.NewsUtil;
 
 /**
  * Created by Administrator on 2016/8/22.
  * 资讯详情
  */
-public class NewsDetailActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener {
+public class NewsDetailActivity extends BaseActivity {
 
-    public static final String NOTICEID = "noticeId";
+    public static final String KEY_ID = "noticeId";
     @InjectView(R.id.mRecyclerView)
     RecyclerView mRecyclerView;
     @InjectView(R.id.mWebView)
@@ -39,83 +59,100 @@ public class NewsDetailActivity extends BaseActivity implements BaseQuickAdapter
     ProgressBar mProssBar;
     @InjectView(R.id.mTxtCommentNum)
     TextView mTxtCommentNum;
+    @InjectView(R.id.pullToRefreshScrollVie)
+    PullToRefreshScrollView pullToRefreshScrollVie;
+    @InjectView(R.id.pl_message)
+    ProgressLayout progressLayout;
+    @InjectView(R.id.is_conllect)
+    ImageView isConllect;
+    @InjectView(R.id.et_pinlun_content)
+    EditText etPinlunContent;
 
 
     private BaseQuickAdapter<NewsComment> mAdapter;
     private List<NewsComment> mList;
-    private int pageSize = 10;//每页的数量
-    private int currentPage = 1;//默认第一页
-    private int commentsId = 0;//记录最后的评论id，防止自己评论后出现重复的评论
-
-//    private String url = OkhttpBase.BASE_URL + OkHttpServletUtils.WEBNEWS;
-
-    private String url ="http://lolsjlj.cjdzjj.com/lol_war/" + "notice/findNoticeById";
-    private boolean isHasData = true;//是否还能加载数据
+    private int pageSize = 4;//每页的数量
+    private int currentPage = 2;//从第二页开始
+    private String url = "";
     private int noticeId;
-    private String content = "";
+    //0 请求的数据是 url和评论首页的数据 1 评论的分页请求 （从第二页开始）2 收藏接口 3 取消收藏接口 4 删除评论接口 5添加评论接口
+    int type = 0;
+    int xiala = 0;
+    private ProgressDialog progressDialog;
+    int CommentId;
+    //0 没有收藏 1收藏
+    int checkCollection;
+    //第一次进来加载WEB界面  在其他的请求中不加载
+    int symbol = 1001;
+//   收藏id
+    int collectionId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolBar = new MyToolBar(this, R.mipmap.bai_back, "财经新闻", "");
-        setContentView(requestView(R.layout.bai_activity_news_detail));
+        toolBar.changeBackgroundCoLor(R.color.white,R.color.black);
+        setContentView(requestView(R.layout.bai_activity_news_detail,R.color.black));
         ButterKnife.inject(this);
+        //获取前一个界面传来的资讯id
+        Intent intent = getIntent();
+        noticeId = intent.getIntExtra(KEY_ID, -1);
+        Log.d("Debug", "传过来的新闻的id" + noticeId);
         initEvent();
     }
 
     private void initEvent() {
-        //获取前一个界面传来的资讯id
-        Intent intent = getIntent();
-        noticeId = intent.getIntExtra(NOTICEID, -1);
-        url += ("?noticeId=" + 6);
-        requestData();
-        initWebView();
+        progressLayout.showProgress();
+        new DataTask().execute();
+        initListview();
         initAdapter();
     }
 
     private void initAdapter() {
-        mList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            NewsComment newsComment = new NewsComment();
-            mList.add(newsComment);
-        }
 
-        mAdapter = new BaseQuickAdapter<NewsComment>(R.layout.bai_commment_item, mList) {
+        mAdapter = new BaseQuickAdapter<NewsComment>(R.layout.bai_commment_item, null) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, NewsComment comment) {
+            protected void convert(final BaseViewHolder baseViewHolder, final NewsComment item) {
+                TextView textView = (TextView) baseViewHolder.getView(R.id.tv_delete);
+                SimpleDraweeView simpleDraweeView = (SimpleDraweeView) baseViewHolder.getView(R.id.mIvHeadImage);
+                simpleDraweeView.setImageURI(item.getHeadImg() + "");
+                baseViewHolder.setText(R.id.user_name, item.getNickName());
+                baseViewHolder.setText(R.id.tv_time, item.getTime());
+                baseViewHolder.setText(R.id.tv_content, item.getComment());
+//                0是自己评论 1不是
+                if (item.getCurrentComment() == 0) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    Log.d("Debug", "自己评论的");
+                }
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("Debug", "删除操作");
+                    }
+                });
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        type = 4;
+                        CommentId = item.getId();
+                        progressDialog = ZhUtils.ProgressDialog.showProgressDialog(NewsDetailActivity.this, "删除中，请稍后...", false);
+                        progressDialog.show();
+                        new DataTask().execute();
+                        mAdapter.remove(baseViewHolder.getPosition());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
 
             }
         };
         mAdapter.openLoadAnimation();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnLoadMoreListener(this);
-        mAdapter.openLoadMore(pageSize, true);
     }
-
-//    @Override
-//    public void requestData() {
-//        super.requestData();
-//        OkhttpParam param = new OkhttpParam();
-//        param.putString("currentPage", currentPage + "");
-//        param.putString("pageSize", pageSize + "");
-//        param.putString(NOTICEID, noticeId + "");
-//        OkhttpUtils.sendRequest(1001, 1, OkHttpServletUtils.NEWSCOMMENT, param, this);
-//    }
-
-//    /**
-//     * 分页请求
-//     */
-//    private void requestDataByPage() {
-//        OkhttpParam param = new OkhttpParam();
-//        param.putString(NOTICEID, noticeId + "");
-//        param.putString("currentPage", currentPage + "");
-//        param.putString("pageSize", pageSize + "");
-//        if (commentsId != 0) {
-//            param.putString("commentsId", commentsId + "");
-//        }
-//        OkhttpUtils.sendRequest(1003, 1, OkHttpServletUtils.NEWSCOMMENT, param, this);
-//    }
 
     private void initWebView() {
         mWebView.requestFocusFromTouch();
@@ -143,150 +180,294 @@ public class NewsDetailActivity extends BaseActivity implements BaseQuickAdapter
         // 设置WebView属性，能够执行Javascript脚本
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.loadUrl(url);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                initAdapter();
+//            }
+//        },2000);
+
+
     }
+
+    private void initListview() {
+        // 上拉、下拉设定
+        pullToRefreshScrollVie.setMode(PullToRefreshBase.Mode.BOTH);
+        // 下拉刷新 业务代码
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setTextTypeface(Typeface.SANS_SERIF);
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setReleaseLabel("放开我");
+        pullToRefreshScrollVie
+                .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        type = 0;
+                        currentPage = 1;
+                        xiala = 0;
+                        symbol++;
+                        new DataTask().execute();
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        type = 1;
+                        xiala = 1;
+                        new DataTask().execute();
+                        currentPage++;
+                    }
+                });
+
+    }
+
+
+    private class DataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(2000);
+                switch (type) {
+                    case 0:
+                        new Thread(newsCommentDetail).run();
+                        break;
+                    case 1:
+                        new Thread(commentList).run();
+                        break;
+                    case 2:
+                        new Thread(addCollection).run();
+                        break;
+                    case 3:
+                        new Thread(delCollection).run();
+                        break;
+                    case 4:
+                        new Thread(delComment).run();
+                        break;
+                    case 5:
+                        new Thread(addComment).run();
+                        break;
+
+                }
+
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            pullToRefreshScrollVie.onRefreshComplete();
+            super.onPostExecute(result);
+        }
+    }
+
+    /**
+     * 获取url和评论首页面的数据
+     */
+    Runnable newsCommentDetail = new Runnable() {
+        @Override
+        public void run() {
+            NewsUtil util = new NewsUtil();
+            util.getNewsData(pageSize, 1, "2ca7d86a476d80859ee32265752ed19f", noticeId, new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        //当前用户是否收藏 0：未收藏 1：已收藏
+                        checkCollection = object.getInt("checkCollection");
+                        if (checkCollection==1){
+                            collectionId=object.getInt("collectionId");
+                        }
+//                        新闻详情地址
+                        url = object.getString("url");
+                        if (symbol == 1001) {
+                            initWebView();
+                        }
+                        JSONArray newsList = object.getJSONArray("commentList");
+                        mList = JSON.parseArray(newsList.toString(), NewsComment.class);
+                        Log.d("Debug", "返回的数据是" + object);
+                            mAdapter.setNewData(mList);
+                        Log.d("Debug", "返回的是否收藏" + checkCollection);
+                        if (checkCollection == 0) {
+//                            isConllect.setBackground(getResources().getDrawable(R.mipmap.bai_collectionn));
+                            isConllect.setImageResource(R.mipmap.bai_collectionn);
+                        } else {
+                            isConllect.setImageResource(R.mipmap.bai_collectionn_no);
+                        }
+                        progressLayout.showContent();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        progressLayout.showContent();
+                    }
+                }
+            });
+        }
+    };
+
+    /**
+     * 获取评论分页数据从第二页开始
+     */
+    Runnable commentList = new Runnable() {
+        @Override
+        public void run() {
+            NewsUtil util = new NewsUtil();
+            util.commentList(noticeId,currentPage,pageSize,"2ca7d86a476d80859ee32265752ed19f",new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        JSONArray newsList = object.getJSONArray("commentList");
+                        mList = JSON.parseArray(newsList.toString(), NewsComment.class);
+                        mAdapter.addData(mList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
+
+
+    /**
+     * 添加评论
+     */
+    Runnable addComment = new Runnable() {
+        @Override
+        public void run() {
+            NewsUtil util = new NewsUtil();
+            util.addComment("2ca7d86a476d80859ee32265752ed19f", noticeId, etPinlunContent.getText().toString().trim(), new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        ToastUtils.MyToast(NewsDetailActivity.this, "添加成功");
+                        collectionId=object.getInt("collectionId");
+                        etPinlunContent.setText("");
+//                        mAdapter.notifyDataSetChanged();
+                        type = 0;
+                        new DataTask().execute();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    };
+    /**
+     * 删除自己的评论
+     */
+    Runnable delComment = new Runnable() {
+        @Override
+        public void run() {
+            NewsUtil util = new NewsUtil();
+            util.delComment("2ca7d86a476d80859ee32265752ed19f", CommentId /*评论的id*/, new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        ToastUtils.MyToast(NewsDetailActivity.this, "删除成功");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    };
+    /**
+     * 添加收藏
+     */
+    Runnable addCollection = new Runnable() {
+        @Override
+        public void run() {
+            NewsUtil util = new NewsUtil();
+            util.addCollection("2ca7d86a476d80859ee32265752ed19f", noticeId/*新闻的id*/, new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        ToastUtils.MyToast(NewsDetailActivity.this, "添加收藏成功");
+                        isConllect.setImageResource(R.mipmap.bai_collectionn_no);
+                        checkCollection = 1;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    };
+    /**
+     * 删除收藏
+     */
+    Runnable delCollection = new Runnable() {
+        @Override
+        public void run() {
+            NewsUtil util = new NewsUtil();
+            util.delCollection("2ca7d86a476d80859ee32265752ed19f", collectionId/*收藏的id*/, new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        ToastUtils.MyToast(NewsDetailActivity.this, "取消收藏成功");
+                        isConllect.setImageResource(R.mipmap.bai_collectionn);
+                        checkCollection = 0;
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    };
+
+
+    @OnClick({R.id.is_conllect, R.id.send})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.is_conllect:
+                if (checkCollection == 0) {
+                    type = 2;
+                    progressDialog = ZhUtils.ProgressDialog.showProgressDialog(this, "收藏中，请稍后...", false);
+                    progressDialog.show();
+                    symbol++;
+                    new DataTask().execute();
+                } else {
+                    type = 3;
+                    progressDialog = ZhUtils.ProgressDialog.showProgressDialog(this, "取消收藏中，请稍后...", false);
+                    progressDialog.show();
+                    new DataTask().execute();
+                }
+                break;
+            case R.id.send:
+                progressDialog = ZhUtils.ProgressDialog.showProgressDialog(this, "添加中，请稍后...", false);
+                progressDialog.show();
+                new DataTask().execute();
+                type = 5;
+                symbol++;
+                break;
+        }
+    }
+
 
     @Override
     public void requestInit() {
         requestData();
     }
 
-//    @Override
-//    public void onLoadMoreRequested() {
-//        mRecyclerView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (!isHasData) {
-//                    mAdapter.notifyDataChangedAfterLoadMore(false);
-//                    View view = getLayoutInflater().inflate(R.layout.not_loading, (ViewGroup) mRecyclerView.getParent(), false);
-//                    mAdapter.addFooterView(view);
-//                    Log.d("Debug", "上拉加载后发现没数据了");
-//                } else {
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            mAdapter.notifyDataChangedAfterLoadMore(true);
-////                            requestDataByPage();
-//                            Log.d("Debug", "上拉加载后发现新数据");
-//                        }
-//                    }, 2000);
-//                }
-//            }
-//        });
-//    }
-
-//    @Override
-//    public void onActionSuccess(int actionId, String ret) {
-//        if (ret != null && ret.length() > 0) {
-//            JSONObject object = JSONObject.parseObject(ret);
-//            int status = object.getIntValue("status");
-//            if (status == 1) {
-//                switch (actionId) {
-//                    //请求数据
-//                    case 1001:
-//                        JSONArray result = object.getJSONArray("result");
-//                        mList = JSON.parseArray(result.toJSONString(), NewsComment.class);
-//                        if (mList.size() == pageSize) {
-//                            isHasData = true;//可能还有数据
-//                            Log.d("Debug", "还有数据");
-//                        } else {
-//                            isHasData = false;//没有数据了
-//                            Log.d("Debug", "没有数据");
-//                        }
-//                        if (mList != null && mList.size() > 0) {
-//                            commentsId = mList.get(mList.size() - 1).getCommentsId();
-//                            for (int i = 0; i < mList.size(); i++) {
-//                                NewsComment newsComment = mList.get(i);
-//                                String content = newsComment.getContent();
-//                                newsComment.setContent(ZhUtils.unicode2String(content));
-//                            }
-//                            mAdapter.setNewData(mList);
-//                            changeSimpleLayout(1);
-//
-//                        } else {
-//                            // 没有评论占位图
-//                            TextView textView = new TextView(this);
-//                            textView.setText("还没有评论~");
-//                            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 50);
-//                            textView.setLayoutParams(layoutParams);
-//                            textView.setPadding(ZhUtils.DimenTrans.dip2px(this, 10), 0, 0, 0);
-//                            mAdapter.addFooterView(textView);
-//                        }
-//                        mTxtCommentNum.setText("评论(" + object.getIntValue("count") + ")");
-//                        break;
-//                    //评论
-//                    case 1002:
-//                        ToastUtils.MyToast(this, "评论成功");
-//                        List data = mAdapter.getData();
-//                        data.add(0, new NewsComment(SimpleUserInfo.userId, content, "刚刚", SimpleUserInfo.headImg, SimpleUserInfo.nickName));
-//                        mAdapter.setNewData(data);
-//                        mEtCommentContent.setText("");//评论成功后清空评论框
-//                        break;
-//                    //分页数据
-//                    case 1003:
-//                        JSONArray resultByPage = object.getJSONArray("result");
-//                        mList = JSON.parseArray(resultByPage.toJSONString(), NewsComment.class);
-//                        if (mList.size() == pageSize) {
-//                            isHasData = true;//可能还有数据
-//                            Log.d("Debug", "还有数据");
-//                        } else {
-//                            isHasData = false;//没有数据了
-//                            Log.d("Debug", "没有数据");
-//                        }
-//                        if (mList != null && mList.size() > 0) {
-//                            commentsId = mList.get(mList.size() - 1).getCommentsId();
-//                            for (int i = 0; i < mList.size(); i++) {
-//                                NewsComment newsComment = mList.get(i);
-//                                String content = newsComment.getContent();
-//                                newsComment.setContent(ZhUtils.unicode2String(content));
-//                            }
-//                            mAdapter.addData(mList);
-//                        }
-//                        break;
-//                }
-//            } else {
-//                ToastUtils.MyToast(this, object.getString("msg"));
-//            }
-//        } else {
-//            ToastUtils.MyToast(this, "暂无数据");
-//        }
-//    }
-
-//    @Override
-//    public void onActionServerFailed(int actionId, int httpStatus) {
-//        switch (actionId) {
-//            //请求数据
-//            case 1001:
-//                changePlaceHolderLayoutByType(SERVER_EXCEPTION, R.drawable.server_exception, "服务器异常！");
-//                break;
-//            //评论
-//            case 1002:
-//                ToastUtils.MyToast(this, "评论失败，请稍后再试");
-//                break;
-//        }
-//    }
-//
-//    @Override
-//    public void onActionException(int actionId, String exception) {
-//        switch (actionId) {
-//            //请求数据
-//            case 1001:
-//                changePlaceHolderLayoutByType(SERVER_EXCEPTION, R.drawable.server_exception, "服务器异常！");
-//                break;
-//            //评论
-//            case 1002:
-//                ToastUtils.MyToast(this, "评论失败，请稍后再试");
-//                break;
-//        }
-//    }
-
-
-//    private void sendData(String data) {
-//        OkhttpParam param = new OkhttpParam();
-//        param.putString(NOTICEID, noticeId + "");
-//        param.putString("content", data + "");
-//        param.putString("userId", SimpleUserInfo.userId + "");
-//        OkhttpUtils.sendRequest(1002, 1, OkHttpServletUtils.ADDCOMMENT, param, this);
-//    }
 
     public void onResume() {
         super.onResume();
@@ -296,8 +477,4 @@ public class NewsDetailActivity extends BaseActivity implements BaseQuickAdapter
         super.onPause();
     }
 
-    @Override
-    public void onLoadMoreRequested() {
-
-    }
 }

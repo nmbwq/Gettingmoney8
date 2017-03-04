@@ -1,12 +1,16 @@
 package money.com.gettingmoney.bai.activity;
 
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +26,18 @@ import money.com.gettingmoney.bai.main.view.ProgressLayout;
 import money.com.gettingmoney.bai.model.MoniDetailModel;
 
 
-public class MoniDetailActivity extends BaseActivity /*implements OnActionListener */{
-    @InjectView(R.id.mLvShopMore)
-    ListView mLvShopMore;
-    @InjectView(R.id.srl_message)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+public class MoniDetailActivity extends BaseActivity /*implements OnActionListener */ {
+
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
+    @InjectView(R.id.mLvShopMore)
+    PullToRefreshListView mLvShopMore;
 
 
-//
+    //
 //适配器
     private CommonAdapter<MoniDetailModel> mAdapter;
-    private List<MoniDetailModel> mList=new ArrayList<>();
+    private List<MoniDetailModel> mList = new ArrayList<>();
 
     private boolean isHasData = false;//是否有数据
     private boolean isLoading;//是否刷新中
@@ -65,6 +68,63 @@ public class MoniDetailActivity extends BaseActivity /*implements OnActionListen
         setContentView(requestView(R.layout.bai_news_list));
         ButterKnife.inject(this);
         initEvent();
+        initListview();
+    }
+
+    private void initListview() {
+        progressLayout.setFocusable(true);
+        progressLayout.setFocusableInTouchMode(true);
+        progressLayout.requestFocus();
+        // 上拉、下拉设定
+        mLvShopMore.setMode(PullToRefreshBase.Mode.BOTH);
+        // 下拉刷新 业务代码
+        mLvShopMore.getLoadingLayoutProxy()
+                .setTextTypeface(Typeface.SANS_SERIF);
+        mLvShopMore.getLoadingLayoutProxy()
+                .setReleaseLabel("放开我");
+        mLvShopMore
+                .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                        page = 1;
+//                        xiala = 0;
+                        new DataTask().execute();
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                        page++;
+//                        xiala = 1;
+                        new DataTask().execute();
+                    }
+                });
+
+    }
+
+    private class DataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            mLvShopMore.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
+    }
+
+    @Override
+    public void requestInit() {
 
     }
 
@@ -90,190 +150,7 @@ public class MoniDetailActivity extends BaseActivity /*implements OnActionListen
 
         };
         mLvShopMore.setAdapter(mAdapter);
-//
-//        //下拉刷新
-//        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.themeColor));
-//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                isHasData = false;
-//                isLoading = true;
-//                page = 0;//还原第一页
-//                requestData();
-//            }
-//        });
-//        //上拉加载
-//        mLvShopMore.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                if (firstVisibleItem + visibleItemCount == totalItemCount) {
-//                    if (!isLoading && isHasData) {//不是在加载中和有数据才能上拉加载
-//                        isLoading = true;
-//                        loadData();
-//                    }
-//                }
-//            }
-//        });
-
-
     }
-
-
-    /**
-     * 加载中和加载结束界面切换
-     *
-     * @param isLoading 是否显示加载中的布局
-     */
-    private void setOnLoading(boolean isLoading) {
-        if (isLoading) {
-            mLlFooter.setVisibility(View.VISIBLE);
-            mTxtFooter.setVisibility(View.GONE);
-        } else {
-            mLlFooter.setVisibility(View.GONE);
-            mTxtFooter.setVisibility(View.VISIBLE);
-        }
-    }
-//
-//    @Override
-//    public void requestData() {
-//        super.requestData();
-//        OkhttpParam okhttpParam = new OkhttpParam();
-//        okhttpParam.putString("token", SimpleInfo.token + "");
-//        okhttpParam.putString("page", page + "");
-//        okhttpParam.putString("num", num + "");
-//        OkhttpUtils.sendRequest(1001, 1, OkHttpServletUtils.REGISTER, okhttpParam, this);
-//    }
-//
-//    private void loadData() {
-//        OkhttpParam param = new OkhttpParam();
-//        param.putString("token", SimpleInfo.token + "");
-//        param.putString("page", page + "");
-//        param.putString("num", num + "");
-//        OkhttpUtils.sendRequest(1002, 1, OkHttpServletUtils.REGISTER, param, this);
-//    }
-
-    @Override
-    public void requestInit() {
-        requestData();
-    }
-
-    /**
-     * 加载出错
-     */
-    private void loadError() {
-        progressLayout.showErrorText("加载出错，点击重试");
-        progressLayout.setOnerrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressLayout.showProgress();
-                page = 0;
-                requestData();
-            }
-        });
-    }
-
-
-//    @Override
-//    public void onActionSuccess(int actionId, String ret) {
-//        if (ret != null && ret.length() > 0) {
-//            JSONObject object = null;
-//            try {
-//                object = JSONObject.parseObject(ret);
-//            } catch (Exception x) {
-//                ToastUtils.MyToast(this, "后端返回数据错误");
-//                return;
-//            }
-//            int status = object.getIntValue("code");
-//            switch (actionId) {
-//                //请求数据
-//                case 1001:
-//                    if (status == 1) {
-//                        JSONArray result = object.getJSONArray("result");
-//
-//                        if (result.size() > 0 && result.toString() != null) {
-//                            mList = JSON.parseArray(result.toJSONString(), Bill.class);
-//                            if (mList.size() == num) {
-//                                isHasData = true;
-//                                page++;
-//                                setOnLoading(true);
-//                            } else {
-//                                setOnLoading(false);
-//                            }
-//                            mAdapter.setmDatas(mList);
-//
-//                        } else {
-////                            没有数据添加占位图
-//                            changePlaceHolderLayoutByType(BaseActivity.DATA_EMPTY, R.drawable.bai_bill_empty, "");
-//                        }
-//                        if (isFirst) {
-//                            mLvShopMore.addFooterView(footer, null, false);//add footer view to listview
-//                            isFirst = false;
-//                        }
-//                        isLoading = false;
-//                        //首次请求的时候  如果页数不够一页的数据 不显示FooterView
-//                        mLlFooter.setVisibility(View.GONE);
-//                        mTxtFooter.setVisibility(View.GONE);
-//                    } else {
-//                        loadError();
-//                    }
-//                    break;
-//                //下注返回结果
-//                case 1002:
-//                    if (status == 1) {
-//                        isHasData = false;
-//                        JSONArray result = object.getJSONArray("result");
-//                        if (result.size() > 0 && result.toString() != null) {
-//                            mList = JSON.parseArray(result.toJSONString(), Bill.class);
-//                            if (mList.size() == num) {
-//                                //还能加载
-//                                page++;
-//                                setOnLoading(true);
-//                                isHasData = true;
-//                            } else {
-//                                setOnLoading(false);
-//                            }
-//                            mAdapter.addmDatas(mList);//放入数据
-//                        } else {
-//                            setOnLoading(false);
-//                        }
-//                        isLoading = false;
-//                        dismissSwipeRefresh(mSwipeRefreshLayout);//关闭
-//                        break;
-//                    } else {
-//                        ToastUtils.MyToast(this, object.getString("msg"));
-//                    }
-//                    break;
-//            }
-//
-//        } else {
-//            ToastUtils.MyToast(BillActivity.this, "暂无数据");
-//        }
-//        //加载出错的时候 才会有progresslayout
-//        progressLayout.showContent();
-//        dismissSwipeRefresh(mSwipeRefreshLayout);//关闭
-//    }
-//
-//    @Override
-//    public void onActionServerFailed(int actionId, int httpStatus) {
-////        changePlaceHolderLayoutByType(SERVER_EXCEPTION, R.drawable.image2, "服务器出现问题了，请稍后再试！");
-//        dismissSwipeRefresh(mSwipeRefreshLayout);//关闭
-//        progressLayout.showContent();
-//        isLoading = false;
-//    }
-//
-//    @Override
-//    public void onActionException(int actionId, String exception) {
-////      changePlaceHolderLayoutByType(SERVER_EXCEPTION, R.drawable.image2, "服务器出现问题了，请稍后再试！");
-//
-//        dismissSwipeRefresh(mSwipeRefreshLayout);//关闭
-//        progressLayout.showContent();
-//        isLoading = false;
-//    }
 
     public void onResume() {
         super.onResume();

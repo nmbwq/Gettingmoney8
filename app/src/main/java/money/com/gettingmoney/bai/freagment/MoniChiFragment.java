@@ -1,17 +1,22 @@
 package money.com.gettingmoney.bai.freagment;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,14 +43,14 @@ public class MoniChiFragment extends BaseFragment /*implements OnActionListener*
     int type;
     @InjectView(R.id.mLvShopMore)
     ListView mLvShopMore;
-    @InjectView(R.id.srl_message)
-    SwipeRefreshLayout mSwipeRefreshLayout;
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
+    @InjectView(R.id.pullToRefreshScrollVie)
+    PullToRefreshScrollView pullToRefreshScrollVie;
 
     //适配器
     private CommonAdapter<MoniStockHomeModel> mAdapter;
-    private List<MoniStockHomeModel> mList ;
+    private List<MoniStockHomeModel> mList;
 
     private boolean isHasData = false;//是否有数据
     private boolean isLoading;//是否刷新中
@@ -83,11 +88,66 @@ public class MoniChiFragment extends BaseFragment /*implements OnActionListener*
         ButterKnife.inject(this, view);
         initWindow();
         initEvent();
+        initListview();
         return view;
     }
 
+    private void initListview() {
+        // 上拉、下拉设定
+        pullToRefreshScrollVie.setMode(PullToRefreshBase.Mode.BOTH);
+        // 下拉刷新 业务代码
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setTextTypeface(Typeface.SANS_SERIF);
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setReleaseLabel("放开我");
+        pullToRefreshScrollVie
+                .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page = 1;
+//                        xiala = 0;
+                        new DataTask().execute();
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page++;
+//                        xiala = 1;
+                        new DataTask().execute();
+                    }
+                });
+
+    }
+
+    private class DataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            pullToRefreshScrollVie.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
+    }
+
     private void initEvent() {
-        mList=new ArrayList<>();
+
+        progressLayout.setFocusable(true);
+        progressLayout.setFocusableInTouchMode(true);
+        progressLayout.requestFocus();
+
+        mList = new ArrayList<>();
 //        requestData();
         for (int i = 0; i < 5; i++) {
             MoniStockHomeModel MoniStockHomeModel = new MoniStockHomeModel();

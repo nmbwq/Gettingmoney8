@@ -33,6 +33,12 @@
             app:placeholderImageScaleType="fitCenter"
             />
 
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="120dp"-->
+            <!--android:src="@mipmap/bai_jiaoyi_banner"-->
+            <!--/>-->
+
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="57dp"

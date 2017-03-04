@@ -6,13 +6,13 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <money.com.gettingmoney.bai.main.view.StretchScrollView
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pullToRefreshScrollVie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+      >
     <!--<ScrollView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content">-->
@@ -20,8 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
 
        <include layout="@layout/sign_space_view"></include>
 
@@ -609,6 +607,6 @@
         <!--</android.support.v4.widget.SwipeRefreshLayout>-->
     </LinearLayout>
     <!--</ScrollView>-->
-    </money.com.gettingmoney.bai.main.view.StretchScrollView>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </money.com.gettingmoney.bai.main.view.ProgressLayout>

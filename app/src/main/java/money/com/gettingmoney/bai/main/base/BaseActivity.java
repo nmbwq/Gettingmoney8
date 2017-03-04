@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,22 +200,26 @@ public abstract class BaseActivity extends FragmentActivity {
 
 
     /**
-     * @param layoutId
-     * @param type     1代表无占位图，0代表有展位图
-     * @return
+   *  1代表无占位图，0代表有展位图
+     *
      */
-    public LinearLayout requestView(int layoutId, int type) {
-        return requestView(layoutId, toolBar, type);
-    }
+//    public LinearLayout requestView(int layoutId, int type) {
+//        return requestView(layoutId, toolBar, type);
+//    }
 
     public LinearLayout requestView(int layoutId) {
         return requestView(layoutId, toolBar, 0);
     }
 
+    public LinearLayout requestView(int layoutId,int stateColor) {
+        return requestView(layoutId, toolBar, 0,stateColor);
+    }
+
+
     public LinearLayout requestView(int layoutId, MyToolBar toolBar, int type) {
         //属于间接的加进去一个activity
         MyAppApiConfig.addActivity(this);
-
+        Log.d("Debug","没有进行传过来参数");
         occupying = new MyOccupying(getBaseContext(),
                 R.mipmap.ic_launcher, "", "重新连接");
 
@@ -239,7 +244,63 @@ public abstract class BaseActivity extends FragmentActivity {
             linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.statusBarColor));
             vLayout.addView(toolBar, 0);
 //            不添加statebar的高度
-//            vLayout.addView(linearLayout, 0);
+            vLayout.addView(linearLayout, 0);
+            toolBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+
+        if (type == 0) {
+            if (occupying != null) {
+                vLayout.addView(this.occupying);
+            }
+        } else if (type == 1) {
+
+        }
+        vLayout.addView(viewLayout);
+        if (ZhUtils.isNetworkConnected(getBaseContext())) {
+            changeSimpleLayout(1);
+        } else {
+            changeSimpleLayout(0);
+        }
+        return vLayout;
+    }
+
+//如果statebar需要变化  调用这个
+    public LinearLayout requestView(int layoutId, MyToolBar toolBar, int type,int stateColor) {
+        //属于间接的加进去一个activity
+        MyAppApiConfig.addActivity(this);
+        Log.d("Debug","传过来的颜色的id是"+stateColor);
+        occupying = new MyOccupying(getBaseContext(),
+                R.mipmap.ic_launcher, "", "重新连接");
+
+        occupying.commit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                requestInit();
+            }
+        });
+        if (vLayout == null) {
+            vLayout = new LinearLayout(getBaseContext());
+            vLayout.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+            vLayout.setOrientation(LinearLayout.VERTICAL);
+        }
+        vLayout.removeAllViews();
+        viewLayout = LayoutInflater.from(getBaseContext()).inflate(layoutId,
+                vLayout, false);
+        if (toolBar != null) {
+            LinearLayout linearLayout = new LinearLayout(this);
+            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ZhUtils.getStatusBarHeight(this)));
+//            linearLayout.setBackgroundColor(stateColor);
+            linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+            Log.d("Debug","daoda");
+            vLayout.addView(toolBar, 0);
+//            不添加statebar的高度
+            vLayout.addView(linearLayout, 0);
             toolBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -268,7 +329,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFullScreen();
-//        initWindow();
+        initWindow();
 //        在所有的Activity 的onCreate 方法或在应用的BaseActivity的onCreate方法中添加：
 //        MyAppApiConfig.mPushAgent.getInstance(this).onAppStart();
     }

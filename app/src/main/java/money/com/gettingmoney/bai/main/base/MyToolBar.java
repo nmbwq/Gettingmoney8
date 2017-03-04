@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -181,6 +182,7 @@ public class MyToolBar extends LinearLayout {
         if (mView == null) {
             mInflater = LayoutInflater.from(getContext());
             mView = mInflater.inflate(R.layout.liu_toolbarlayout, this);
+            LinearLayout viewById = (LinearLayout) mView.findViewById(R.id.ll_toolBarColor);
             titleView = (TextView) mView.findViewById(R.id.toolbar_title);
             rightImageBtn = (ImageView) mView
                     .findViewById(R.id.toolbar_rightButton);
@@ -195,6 +197,19 @@ public class MyToolBar extends LinearLayout {
             rightLayout = (LinearLayout) mView
                     .findViewById(R.id.toolbar_rightLayout);
         }
+    }
+
+    /**
+     * 更改toobal的颜色 和字体的颜色
+     * @param id
+     */
+    public void changeBackgroundCoLor(int id,int textColorId) {
+        LinearLayout viewById = (LinearLayout) mView.findViewById(R.id.ll_toolBarColor);
+        Log.d("Debug","到达更改");
+        viewById.setBackgroundColor(getResources().getColor(id));
+        titleView.setTextColor(getResources().getColor(textColorId));
+        rightTextBtn.setTextColor(getResources().getColor(textColorId));
+        leftTextBtn.setTextColor(getResources().getColor(textColorId));
     }
 
     public void setRightBtnIcon(Drawable ic) {

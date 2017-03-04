@@ -30,7 +30,7 @@ public class ProgressLayout extends RelativeLayout {
 
     public static enum State {
         CONTENT, PROGRESS, ERROR
-    }
+}
 
     private View mProgressView;
     private TextView mErrorTextView;
@@ -181,7 +181,6 @@ public class ProgressLayout extends RelativeLayout {
                 break;
         }
     }
-
     public State getState() {
         return mState;
     }

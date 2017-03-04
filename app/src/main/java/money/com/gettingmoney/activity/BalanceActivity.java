@@ -92,6 +92,7 @@ public class BalanceActivity extends BaseActivity {
             // Simulates a background job.
             try {
                 Thread.sleep(2000);
+
             } catch (InterruptedException e) {
             }
             return null;

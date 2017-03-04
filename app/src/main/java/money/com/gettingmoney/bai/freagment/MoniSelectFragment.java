@@ -71,6 +71,8 @@ public class MoniSelectFragment extends BaseFragment /*implements OnActionListen
         return view;
     }
 
+
+
     private void initEvent() {
 
     }

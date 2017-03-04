@@ -75,8 +75,10 @@ public class TransacationFragment extends BaseFragment {
         Description description = new Description();
         description.setText("");
         pieChart.setDescription(description);
+        //使用百分比
+//        pieChart.setUsePercentValues(true);
+        pieChart.setDrawSliceText(true);
 
-        // mChart.setDrawYValues(true);
         pieChart.setDrawCenterText(true);  //饼状图中间可以添加文字
 
         pieChart.setDrawHoleEnabled(true);
@@ -91,8 +93,8 @@ public class TransacationFragment extends BaseFragment {
 
         // display percentage values
         pieChart.setUsePercentValues(true);  //显示成百分比
-        // mChart.setUnit(" €");
-        // mChart.setDrawUnitsInChart(true);
+//        pieChart.setUnit("€");
+//        pieChart.setDrawUnitsInChart(true);
 
         // add a selection listener
 //      mChart.setOnChartValueSelectedListener(this);
@@ -124,12 +126,12 @@ public class TransacationFragment extends BaseFragment {
      * @param range
      */
     private PieData getPieData(int count, float range) {
-
-        List<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
-
-        for (int i = 0; i < count; i++) {
-            xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
-        }
+//
+//        List<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
+//
+//        for (int i = 0; i < count; i++) {
+//            xValues.add("Quarterly" + (i + 1));  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
+//        }
 
         List<PieEntry> yValues = new ArrayList<PieEntry>();  //yVals用来表示封装每个饼块的实际数据
 
@@ -138,16 +140,17 @@ public class TransacationFragment extends BaseFragment {
          * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38
          * 所以 14代表的百分比就是14%
          */
-        float quarterly1 = 14;
-        float quarterly2 = 14;
-        float quarterly3 = 34;
-        float quarterly4 = 38;
+        float quarterly1 = 130;
+        float quarterly2 = 24;
+        float quarterly3 = 360;
+        float quarterly4 = 200;
 
         //这里显示的是百分比
-        yValues.add(new PieEntry(20, 0));
-        yValues.add(new PieEntry(quarterly2, 1));
-        yValues.add(new PieEntry(quarterly3, 2));
-        yValues.add(new PieEntry(quarterly4, 3));
+        yValues.add(new PieEntry(quarterly1, 0));
+        yValues.add(new PieEntry(quarterly2, 0));
+        yValues.add(new PieEntry(quarterly3,0));
+        yValues.add(new PieEntry(quarterly4, 0));
+
 
         //y轴的集合
         PieDataSet pieDataSet = new PieDataSet(yValues, "");
@@ -169,6 +172,7 @@ public class TransacationFragment extends BaseFragment {
         pieDataSet.setSelectionShift(px); // 选中态多出的长度
 
         PieData pieData = new PieData(pieDataSet);
+        pieData.setDrawValues(true);
         return pieData;
     }
 

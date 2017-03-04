@@ -6,10 +6,12 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,18 +19,20 @@ import java.util.ArrayList;
 
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.app.MoneyApplication;
+import money.com.gettingmoney.bai.main.utils.ZhUtils;
 
 public class MarketFragment extends Fragment implements View.OnClickListener {
 
     /**
      * 行情界面
+     *
      * @param savedInstanceState
      */
     private View view;
     private Context con;
-    private RelativeLayout market_selfchosebtn,market_indexbtn,market_shenzhenbtn,market_platebtn,market_gangmeibtn;
-    private TextView market_selfchosetext,market_indextext,market_shenzhentext,market_platetext,market_gangmeitext;
-    private View market_view1,market_view2,market_view3,market_view4,market_view5;
+    private RelativeLayout market_selfchosebtn, market_indexbtn, market_shenzhenbtn, market_platebtn, market_gangmeibtn;
+    private TextView market_selfchosetext, market_indextext, market_shenzhentext, market_platetext, market_gangmeitext;
+    private View market_view1, market_view2, market_view3, market_view4, market_view5;
     private ArrayList<TextView> texts;
     private ArrayList<View> views;
     private int position;
@@ -40,12 +44,24 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
     private GangmeiFragment gangmeiFragment;
     private ViewPager viewpager;
     private ArrayList<Fragment> fragmentArrayList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_market,null);
+        //xml文件里面要实现的布局
+        view = inflater.inflate(R.layout.fragment_market, null);
+//        设置整体布局的属性 宽高 是垂直还是横向
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout.setOrientation(LinearLayout.VERTICAL);
+        //说白了 （就是手动加载一个状态栏的高度的布局）
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ZhUtils.getStatusBarHeight(getActivity())));
+        linearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.themeColor));
+        layout.addView(view);
+        layout.addView(linearLayout, 0);
         con = MoneyApplication.getContext();
         initview();
-        return view;
+        return layout;
     }
 
     private void initview() {
@@ -124,37 +140,37 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.market_selfchosebtn:
-                if(position==0){
+                if (position == 0) {
                     return;
                 }
                 chose(0);
                 break;
 
             case R.id.market_indexbtn:
-                if(position==1){
+                if (position == 1) {
                     return;
                 }
                 chose(1);
                 break;
 
             case R.id.market_shenzhenbtn:
-                if(position==2){
+                if (position == 2) {
                     return;
                 }
                 chose(2);
                 break;
 
             case R.id.market_platebtn:
-                if(position==3){
+                if (position == 3) {
                     return;
                 }
                 chose(3);
                 break;
 
             case R.id.market_gangmeibtn:
-                if(position==4){
+                if (position == 4) {
                     return;
                 }
                 chose(4);
@@ -163,7 +179,7 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void chose(int po){
+    private void chose(int po) {
         for (int i = 0; i < views.size(); i++) {
             if (i == po) {
                 texts.get(i).setTextColor(getResources().getColor(R.color.home_color));
@@ -175,14 +191,12 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
 
         }
         viewpager.setCurrentItem(po, true);
-        position=po;
+        position = po;
     }
 
-    class MyFrageStatePagerAdapter extends FragmentStatePagerAdapter
-    {
+    class MyFrageStatePagerAdapter extends FragmentStatePagerAdapter {
 
-        public MyFrageStatePagerAdapter(FragmentManager fm)
-        {
+        public MyFrageStatePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -200,17 +214,15 @@ public class MarketFragment extends Fragment implements View.OnClickListener {
          * 每次更新完成ViewPager的内容后，调用该接口，此处复写主要是为了让导航按钮上层的覆盖层能够动态的移动
          */
         @Override
-        public void finishUpdate(ViewGroup container)
-        {
+        public void finishUpdate(ViewGroup container) {
             super.finishUpdate(container);//这句话要放在最前面，否则会报错
             //获取当前的视图是位于ViewGroup的第几个位置，用来更新对应的覆盖层所在的位置
-            int currentItem=viewpager.getCurrentItem();
-            if (currentItem==position)
-            {
-                return ;
+            int currentItem = viewpager.getCurrentItem();
+            if (currentItem == position) {
+                return;
             }
 
-            position=viewpager.getCurrentItem();
+            position = viewpager.getCurrentItem();
         }
 
         @Override

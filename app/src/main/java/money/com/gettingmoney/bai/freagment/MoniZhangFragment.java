@@ -1,6 +1,8 @@
 package money.com.gettingmoney.bai.freagment;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -9,7 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +30,6 @@ import money.com.gettingmoney.bai.main.adapter.CommonAdapter;
 import money.com.gettingmoney.bai.main.adapter.ViewHolder;
 import money.com.gettingmoney.bai.main.base.BaseFragment;
 import money.com.gettingmoney.bai.main.view.ProgressLayout;
-import money.com.gettingmoney.bai.main.view.StretchScrollView;
 import money.com.gettingmoney.bai.model.MoniStockHomeModel;
 import money.com.gettingmoney.bai.view.ListViewForScrollView;
 
@@ -43,8 +48,6 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
 //    SwipeRefreshLayout mSwipeRefreshLayout;
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
-    @InjectView(R.id.stretchScrollView)
-    StretchScrollView stretchScrollView;
     @InjectView(R.id.tv_number)
     TextView tvNumber;
     @InjectView(R.id.quancang)
@@ -57,8 +60,9 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
     LinearLayout llCang;
     @InjectView(R.id.pl_message)
     ProgressLayout plMessage;
+    @InjectView(R.id.pullToRefreshScrollVie)
+    PullToRefreshScrollView pullToRefreshScrollVie;
     //改变背景颜色 不改变背景的形状
-    GradientDrawable gradientDrawable;
 
     //适配器
     private CommonAdapter<MoniStockHomeModel> mAdapter;
@@ -68,6 +72,7 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
     private boolean isLoading;//是否刷新中
 
     private LinearLayout mLlFooter;
+
     private TextView mTxtFooter;
 
     /**
@@ -104,7 +109,57 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
         ButterKnife.inject(this, view);
         initWindow();
         initEvent();
+        initListview();
         return view;
+    }
+
+    private void initListview() {
+        // 上拉、下拉设定
+        pullToRefreshScrollVie.setMode(PullToRefreshBase.Mode.BOTH);
+        // 下拉刷新 业务代码
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setTextTypeface(Typeface.SANS_SERIF);
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setReleaseLabel("放开我");
+        pullToRefreshScrollVie
+                .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page = 1;
+//                        xiala = 0;
+                        new DataTask().execute();
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page++;
+//                        xiala = 1;
+                        new DataTask().execute();
+                    }
+                });
+
+    }
+
+    private class DataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            pullToRefreshScrollVie.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
     }
 
     private void initEvent() {
@@ -161,6 +216,7 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
 
 
         };
+//        mLvShopMore.setAdapter(mAdapter);
         mLvShopMore.setAdapter(mAdapter);
 
     }
@@ -197,7 +253,7 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
                 twocang.setTextColor(getResources().getColor(R.color._e93030));
                 threecang.setBackgroundColor(getResources().getColor(R.color.white));
                 threecang.setTextColor(getResources().getColor(R.color._e93030));
-                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
+//                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
                 cang = 0;
                 break;
             case R.id.twocang:
@@ -207,7 +263,7 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
                 quancang.setTextColor(getResources().getColor(R.color._e93030));
                 threecang.setBackgroundColor(getResources().getColor(R.color.white));
                 threecang.setTextColor(getResources().getColor(R.color._e93030));
-                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
+//                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
                 cang = 1;
                 break;
             case R.id.threecang:
@@ -217,7 +273,7 @@ public class MoniZhangFragment extends BaseFragment /*implements OnActionListene
                 twocang.setTextColor(getResources().getColor(R.color._e93030));
                 quancang.setBackgroundColor(getResources().getColor(R.color.white));
                 quancang.setTextColor(getResources().getColor(R.color._e93030));
-                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
+//                llCang.setBackground(getResources().getDrawable(R.drawable.bai_chongzhi_shape1));
                 cang = 2;
                 break;
         }

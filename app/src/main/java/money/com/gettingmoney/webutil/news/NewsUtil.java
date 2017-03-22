@@ -122,6 +122,19 @@ public class NewsUtil implements INewsUtil {
         map.put("id", id);
         MyXutils.getInstance().post(null,url,map,callBack);
     }
+    /**
+     * 测试socket
+     */
+
+    @Override
+    public void TextSocket(String userNumber, String id, MyXutils.XCallBack callBack) {
+        String url = HOST+"other/sendSocketMSG";
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", userNumber);
+        map.put("userId", id);
+        MyXutils.getInstance().post(null,url,map,callBack);
+    }
+
 
 
 }

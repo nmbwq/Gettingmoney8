@@ -110,9 +110,7 @@
         </activity>
         <activity android:name=".activity.SplashActivity" />
         <activity android:name=".activity.FindPwdActivity"></activity>
+        <activity android:name=".bai.activity.SocketActivity" />
     </application>
-
-
-
 
 </manifest>

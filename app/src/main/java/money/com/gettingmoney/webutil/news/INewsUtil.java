@@ -14,5 +14,6 @@ public interface INewsUtil {
     public void getNewsData(int pageSize,int currentPage,String userNumber,int newsId,MyXutils.XCallBack callBack);
     public void addCollection(String userNumber,int newsId,MyXutils.XCallBack callBack);
     public void delCollection(String userNumber,int id,MyXutils.XCallBack callBack);
+    public void TextSocket(String msg,String  userId,MyXutils.XCallBack callBack);
 
 }

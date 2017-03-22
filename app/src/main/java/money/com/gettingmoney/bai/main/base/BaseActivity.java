@@ -241,7 +241,8 @@ public abstract class BaseActivity extends FragmentActivity {
         if (toolBar != null) {
             LinearLayout linearLayout = new LinearLayout(this);
             linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ZhUtils.getStatusBarHeight(this)));
-            linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.statusBarColor));
+            linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+            Log.d("Debug","代码执行过啦");
             vLayout.addView(toolBar, 0);
 //            不添加statebar的高度
             vLayout.addView(linearLayout, 0);

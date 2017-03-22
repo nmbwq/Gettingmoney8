@@ -94,7 +94,7 @@ public class NewsDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         toolBar = new MyToolBar(this, R.mipmap.bai_back, "财经新闻", "");
         toolBar.changeBackgroundCoLor(R.color.white,R.color.black);
-        setContentView(requestView(R.layout.bai_activity_news_detail,R.color.black));
+        setContentView(requestView(R.layout.bai_activity_news_detail));
         ButterKnife.inject(this);
         //获取前一个界面传来的资讯id
         Intent intent = getIntent();

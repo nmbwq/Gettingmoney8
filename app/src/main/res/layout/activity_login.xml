@@ -96,6 +96,7 @@
 
 
                 <TextView
+                    android:id="@+id/findpwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -150,6 +151,7 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/login_weixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -170,6 +172,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/login_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

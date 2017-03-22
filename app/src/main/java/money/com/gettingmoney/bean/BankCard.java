@@ -1,9 +1,11 @@
 package money.com.gettingmoney.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/11/5.
  */
-public class BankCard {
+public class BankCard implements Serializable {
 
     public int bankId;
     public String bankName;

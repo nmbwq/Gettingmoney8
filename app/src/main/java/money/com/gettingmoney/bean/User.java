@@ -1,9 +1,13 @@
 package money.com.gettingmoney.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/2/23.
  */
-public class User {
+public class User implements Serializable {
+    public Integer userId;
+    public Integer state;
     public String code;
     public String pwd;
     public String nickName;
@@ -39,5 +43,21 @@ public class User {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

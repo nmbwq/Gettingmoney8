@@ -24,6 +24,7 @@ import money.com.gettingmoney.util.ActivityCollector;
 import money.com.gettingmoney.util.ActivityJump;
 import money.com.gettingmoney.util.FileUtil;
 import money.com.gettingmoney.util.MyAppApiConfig;
+import money.com.gettingmoney.util.ShareUtil;
 
 public class SetActivity extends BaseActivity implements View.OnClickListener {
 
@@ -90,6 +91,8 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
                 ActivityJump.jumpActivity(SetActivity.this,LoginActivity.class);
                 ActivityCollector.addActivity(MyAppApiConfig.MAIN_ACTIVITY);
                 ActivityCollector.finishAll();
+                ShareUtil.getInstance().saveUser(SetActivity.this, "");
+                ShareUtil.getInstance().saveUserNumber(SetActivity.this,"");
                 break;
 
             case R.id.cancel:

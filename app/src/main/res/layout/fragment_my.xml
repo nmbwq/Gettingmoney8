@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/my_parent"
     android:background="@color/beijing">
 
     <ScrollView
@@ -23,10 +24,12 @@
         android:gravity="center">
 
         <money.com.gettingmoney.weiget.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/user_headimg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@mipmap/me_headimg"/>
         <TextView
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"

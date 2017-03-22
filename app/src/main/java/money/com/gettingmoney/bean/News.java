@@ -1,9 +1,11 @@
 package money.com.gettingmoney.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/2/20.
  */
-public class News {
+public class News implements Serializable {
     public int newsId;
     public String newsName;
 

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/closexx"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/text_black"
+            android:layout_centerInParent="true"
+            android:text="付款详情"/>
+    </RelativeLayout>
+    <include layout="@layout/fengexian"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/text_black"
+            android:text="有财币"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text_black"
+            android:text="¥ 6.00"/>
+    </LinearLayout>
+    <include layout="@layout/fengexian"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_999"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:text="支付方式"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:textSize="15sp"
+            android:textColor="@color/text_black"
+            android:layout_centerVertical="true"
+            android:text="建设银行储蓄卡(4562)"/>
+    </RelativeLayout>
+
+    <include layout="@layout/fengexian"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_999"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:text="持卡人"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:textSize="15sp"
+            android:textColor="@color/text_black"
+            android:layout_centerVertical="true"
+            android:text="**刚"/>
+    </RelativeLayout>
+
+    <include layout="@layout/fengexian"/>
+
+     <TextView
+        android:id="@+id/passwback_sure"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+         android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:background="@drawable/red_shape"
+        android:text="立即支付"/>
+</LinearLayout>

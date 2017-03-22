@@ -132,6 +132,22 @@ public class ShareUtil {
     }
 
 
+    public void saveisfirst(Context context,int isfirst){
+        sharedPreferences= context.getSharedPreferences("myshare",
+                Activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putInt("isfirst", isfirst);
+        editor.commit();
+    }
+
+    public int getisfirst(Context context){
+
+        sharedPreferences= context.getSharedPreferences("myshare",
+                Activity.MODE_PRIVATE);
+        int isfirst = sharedPreferences.getInt("isfirst", 0);
+        return isfirst;
+    }
+
 
     public String gettoken(){
         String _uploadToken = null;

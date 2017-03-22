@@ -1,25 +1,36 @@
 package money.com.gettingmoney.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/2/21.
  */
-public class Balance {
-    public int balanceId;
-    public String balanceName;
+public class Balance implements Serializable {
+    public int state;
+    public Long createTime;
+    public Double money;
 
-    public int getBalanceId() {
-        return balanceId;
+    public int getState() {
+        return state;
     }
 
-    public void setBalanceId(int balanceId) {
-        this.balanceId = balanceId;
+    public void setState(int state) {
+        this.state = state;
     }
 
-    public String getBalanceName() {
-        return balanceName;
+    public Long getCreateTime() {
+        return createTime;
     }
 
-    public void setBalanceName(String balanceName) {
-        this.balanceName = balanceName;
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public void setMoney(Double money) {
+        this.money = money;
     }
 }

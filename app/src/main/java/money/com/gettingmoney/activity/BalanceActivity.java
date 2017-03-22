@@ -3,6 +3,8 @@ package money.com.gettingmoney.activity;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,11 +12,19 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.adapter.BalanceAdapter;
 import money.com.gettingmoney.bean.Balance;
+import money.com.gettingmoney.util.JsonUitl;
+import money.com.gettingmoney.util.MyXutils;
+import money.com.gettingmoney.util.ShareUtil;
+import money.com.gettingmoney.webutil.wallet.WalletUtil;
+import money.com.gettingmoney.weiget.LoadingDialog;
 
 public class BalanceActivity extends BaseActivity {
 
@@ -28,6 +38,23 @@ public class BalanceActivity extends BaseActivity {
     private BalanceAdapter adapter;
     private int page=1;
     private int xiala=0;
+    private LoadingDialog dialog;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 100:
+                    if(xiala==0){
+                        adapter = new BalanceAdapter(BalanceActivity.this,balances);
+                        balance_listview.setAdapter(adapter);
+                    }else{
+                        adapter.notifyDataSetChanged();
+                    }
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +70,10 @@ public class BalanceActivity extends BaseActivity {
         head_title.setText("收支明细");
         head_right.setVisibility(View.GONE);
         initListview();
+        dialog = new LoadingDialog(this,"正在加载");
+        dialog.show();
         balances = new ArrayList<>();
-        Balance balance = new Balance();
-        balance.setBalanceName("有财豆");
-        balances.add(balance);
-        balances.add(balance);
-        balances.add(balance);
-
-        adapter = new BalanceAdapter(this,balances);
-        balance_listview.setAdapter(adapter);
-
+        new Thread(getbalane).run();
     }
 
 
@@ -106,4 +127,33 @@ public class BalanceActivity extends BaseActivity {
             super.onPostExecute(result);
         }
     }
+
+    Runnable getbalane = new Runnable() {
+        @Override
+        public void run() {
+            WalletUtil util = new WalletUtil();
+            util.findWalletDetail(ShareUtil.getInstance().getUserNumber(BalanceActivity.this), page, 10, new MyXutils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        ArrayList<Balance> balances1 = (ArrayList<Balance>) JsonUitl.stringToList(object.getJSONArray("result").toString(),Balance.class);
+
+                        if(xiala==0){
+                            balances = balances1;
+                        }else{
+                            for (int i=0;i<balances1.size();i++){
+                                balances.add(balances1.get(i));
+                            }
+                        }
+                        Message message = new Message();
+                        message.what = 100;
+                        handler.sendMessage(message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
 }

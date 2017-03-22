@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import money.com.gettingmoney.R;
-import money.com.gettingmoney.bean.News;
+import money.com.gettingmoney.bean.Collection;
 import money.com.gettingmoney.util.MyAppApiConfig;
 import money.com.gettingmoney.weiget.LoadingDialog;
 
@@ -21,12 +21,12 @@ import money.com.gettingmoney.weiget.LoadingDialog;
 public class NewsAdapter extends BaseAdapter{
 
     private Context context;
-    private ArrayList<News> list;
+    private ArrayList<Collection> list;
     private NewsAdapter adapter;
     private String imgurl = MyAppApiConfig.IMGHOST_URL;
     private LoadingDialog dialog;
     private int type;//0、不是收藏界面，1、是收藏界面
-    public NewsAdapter(Context context, ArrayList<News> list,int type) {
+    public NewsAdapter(Context context, ArrayList<Collection> list,int type) {
         super();
         this.context = context;
         this.list = list;
@@ -72,8 +72,8 @@ public class NewsAdapter extends BaseAdapter{
             holder.news_commentlayout.setVisibility(View.GONE);
             holder.news_deletlayout.setVisibility(View.VISIBLE);
         }
-        News news = list.get(position);
-        holder.news_name.setText(news.getNewsName());
+        Collection news = list.get(position);
+        holder.news_name.setText(news.getTitle());
 
         return convertView;
 

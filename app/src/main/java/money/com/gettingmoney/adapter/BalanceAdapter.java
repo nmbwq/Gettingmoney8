@@ -49,13 +49,19 @@ public class BalanceAdapter extends BaseAdapter {
             holder = new Holder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_balance,null);
             holder.balance_name = (TextView) convertView.findViewById(R.id.balance_name);
+            holder.balance_state = (TextView) convertView.findViewById(R.id.balance_state);
             convertView.setTag(holder);
         }else{
             holder = (Holder) convertView.getTag();
         }
 
         Balance balance = list.get(position);
-        holder.balance_name.setText(balance.getBalanceName());
+        int state = balance.getState();
+        if(state==0){
+            holder.balance_state.setText("收入");
+        }else{
+            holder.balance_state.setText("支出");
+        }
 
 
         return convertView;
@@ -63,5 +69,6 @@ public class BalanceAdapter extends BaseAdapter {
     }
     class Holder{
         public TextView balance_name;
+        public TextView balance_state;
     }
 }

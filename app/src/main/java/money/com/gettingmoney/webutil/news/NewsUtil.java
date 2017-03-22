@@ -22,7 +22,7 @@ public class NewsUtil implements INewsUtil {
      */
     @Override
     public void newslist(int type, int currentPage, int pageSize, String userNumber, MyXutils.XCallBack callBack) {
-        String url = HOST+"news/newslist";
+        String url = HOST+"news/list";
         Map<String, Object> map = new HashMap<>();
         map.put("type", type);
         map.put("currentPage", currentPage);

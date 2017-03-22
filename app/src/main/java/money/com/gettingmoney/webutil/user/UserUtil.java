@@ -85,15 +85,23 @@ public class UserUtil implements IUserutil {
      * @param dialog
      * @param userNumber
      * @param user
-     * @param newPwd
      * @param callBack
      */
     @Override
-    public void updateUser(LoadingDialog dialog, String userNumber, User user, String newPwd, MyXutils.XCallBack callBack) {
+    public void updateUser(LoadingDialog dialog, String userNumber, User user, MyXutils.XCallBack callBack) {
         String url = HOST+"user/updateUser";
         Map<String, Object> map = new HashMap<>();
         map.put("userNumber", userNumber);
-        map.put("user", user);
+        map.put("user", JsonUitl.objectToString(user));
+        MyXutils.getInstance().post(dialog,url,map,callBack);
+    }
+
+    @Override
+    public void feedback(LoadingDialog dialog, String userNumber, String content, MyXutils.XCallBack callBack) {
+        String url = HOST+"feedback/add";
+        Map<String, Object> map = new HashMap<>();
+        map.put("userNumber", userNumber);
+        map.put("content", content);
         MyXutils.getInstance().post(dialog,url,map,callBack);
     }
 }

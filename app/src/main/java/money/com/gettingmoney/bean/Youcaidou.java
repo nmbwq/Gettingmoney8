@@ -1,9 +1,11 @@
 package money.com.gettingmoney.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/2/21.
  */
-public class Youcaidou {
+public class Youcaidou implements Serializable {
     public int douId;
     public int youcainum;
     public int youcaimoney;

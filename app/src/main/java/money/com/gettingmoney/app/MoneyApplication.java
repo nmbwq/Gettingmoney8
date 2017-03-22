@@ -16,6 +16,8 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import org.xutils.x;
 
@@ -48,6 +50,7 @@ public class MoneyApplication extends Application {
 
         x.Ext.init(this);
         x.Ext.setDebug(true);
+        UMShareAPI.get(this);
 //		initImageLoader(getApplicationContext());
         int memClass = 4;//((ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
         int cacheSize = 1024 * 1024 * memClass / 2 ;
@@ -92,4 +95,13 @@ public class MoneyApplication extends Application {
 //        Thread.setDefaultUncaughtExceptionHandler(handler);
 
     }
+
+    {
+
+        PlatformConfig.setWeixin("wx99581f72ef59420b", "6a78d65bff7b905d2e94f4d93d8d512d");
+//        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+//        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+    }
+
+
 }

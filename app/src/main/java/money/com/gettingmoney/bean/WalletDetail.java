@@ -1,9 +1,11 @@
 package money.com.gettingmoney.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/2/23.
  */
-public class WalletDetail {
+public class WalletDetail implements Serializable {
     public int state;
     public int money;
 

@@ -1,5 +1,6 @@
 package money.com.gettingmoney.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.umeng.socialize.UMShareAPI;
 
+import java.util.ArrayList;
 
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.fragment.EntertainmentFragment;
@@ -18,7 +20,9 @@ import money.com.gettingmoney.fragment.HomeFragment;
 import money.com.gettingmoney.fragment.MarketFragment;
 import money.com.gettingmoney.fragment.MyFragment;
 import money.com.gettingmoney.fragment.TransacationFragment;
+import money.com.gettingmoney.util.ActivityJump;
 import money.com.gettingmoney.util.MyAppApiConfig;
+import money.com.gettingmoney.util.ShareUtil;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -159,14 +163,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 if(position==4){
                     return;
                 }
-                trans.replace(R.id.main_fragment, myFragment);
-                trans.commit();
-                home_img.setImageResource(R.mipmap.youcailu);
-                market_img.setImageResource(R.mipmap.quotes);
-                transacation_img.setImageResource(R.mipmap.transaction);
-                entertainment_img.setImageResource(R.mipmap.entertainment);
-                my_img.setImageResource(R.mipmap.minered);
-                changtextcolor(4);
+                String usernumber = ShareUtil.getInstance().getUserNumber(MainActivity.this);
+                if(usernumber.equals("")){
+                    ActivityJump.jumpActivity(MainActivity.this,LoginActivity.class);
+                }else{
+                    trans.replace(R.id.main_fragment, myFragment);
+                    trans.commit();
+                    home_img.setImageResource(R.mipmap.youcailu);
+                    market_img.setImageResource(R.mipmap.quotes);
+                    transacation_img.setImageResource(R.mipmap.transaction);
+                    entertainment_img.setImageResource(R.mipmap.entertainment);
+                    my_img.setImageResource(R.mipmap.minered);
+                    changtextcolor(4);
+                }
+
 
                 break;
 
@@ -184,5 +194,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
         position = po;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
     }
 }

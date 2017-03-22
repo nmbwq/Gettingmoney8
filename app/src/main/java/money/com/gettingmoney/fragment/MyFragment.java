@@ -1,14 +1,7 @@
 package money.com.gettingmoney.fragment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,17 +13,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import org.json.JSONObject;
 
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.activity.AboutActivity;

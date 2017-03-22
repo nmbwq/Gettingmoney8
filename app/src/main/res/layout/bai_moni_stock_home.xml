@@ -7,142 +7,137 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_message"
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pullToRefreshScrollVie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <!--有弹性的ScrollView 实现下拉弹回和上拉弹回-->
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <include layout="@layout/sign_space_view"></include>
+            <include layout="@layout/sign_space_view"></include>
 
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="70dp"
-               android:padding="12dp"
-               android:orientation="horizontal"
-               android:background="@color/white"
-               >
-           <RelativeLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-                                <TextView
-                                    android:layout_width="60dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="1.06%"
-                                    android:gravity="center"
-                                    style="@style/_e93030_font_16sp"
-                                    />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="浮动盈亏："
-                                    android:layout_marginLeft="36dp"
-                                    style="@style/_999999_font_13sp"
-                                    />
-                                <TextView
-                                    android:layout_width="40dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="1022"
-                                    android:layout_marginLeft="10dp"
-                                    style="@style/_e93030_font_13sp"
-                                    />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/_e93030_font_16sp"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="1.06%" />
+
+                            <TextView
+                                style="@style/_999999_font_13sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="36dp"
+                                android:text="浮动盈亏：" />
+
+                            <TextView
+                                style="@style/_e93030_font_13sp"
+                                android:layout_width="40dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="1022" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_marginTop="8dp"
-                            >
-                                <TextView
-                                    android:layout_width="60dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="总收益率"
-                                    style="@style/_999999_font_13sp"
-                                    android:gravity="center"
-                                    />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="股票市值："
-                                    android:layout_marginLeft="36dp"
-                                    style="@style/_999999_font_13sp"
-                                    />
-                                <TextView
-                                    android:layout_width="40dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="1022"
-                                    android:layout_marginLeft="10dp"
-                                    style="@style/_black_font_14sp"
-                                    />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/_999999_font_13sp"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="总收益率" />
+
+                            <TextView
+                                style="@style/_999999_font_13sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="36dp"
+                                android:text="股票市值：" />
+
+                            <TextView
+                                style="@style/_black_font_14sp"
+                                android:layout_width="40dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="1022" />
                         </LinearLayout>
 
-                </LinearLayout>
-                   
-                <TextView
-                    android:layout_width="76dp"
-                    android:layout_height="30dp"
-                    android:text="资金充值"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    style="@style/_e93030_font_13sp"
-                    android:background="@drawable/bai_chongzhi_shape"
-                    android:gravity="center"
-                    />
+                    </LinearLayout>
 
-          </RelativeLayout>
-                   
-        </LinearLayout>
+                    <TextView
+                        style="@style/_e93030_font_13sp"
+                        android:layout_width="76dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bai_chongzhi_shape"
+                        android:gravity="center"
+                        android:text="资金充值" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
 
-        <include layout="@layout/sign_line_view"></include>
+            <include layout="@layout/sign_line_view"></include>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
                 <LinearLayout
                     android:id="@+id/ll_zhang"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                   android:gravity="center"
-                    >
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/zhang"
-                        />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="买涨"
-                            android:layout_marginTop="7dp"
-                            style="@style/_666666_font_13sp"
+                        android:src="@mipmap/zhang" />
 
-                            />
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="买涨"
+
+                        />
 
                 </LinearLayout>
 
@@ -151,162 +146,162 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/die"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="买跌"
-                            android:layout_marginTop="7dp"
-                            style="@style/_666666_font_13sp"
+                    android:orientation="vertical">
 
-                            />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/die" />
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="买跌"
+
+                        />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_chi"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/chicang"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="持仓"
-                            android:layout_marginTop="7dp"
-                            style="@style/_666666_font_13sp"
+                    android:orientation="vertical">
 
-                            />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/chicang" />
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="持仓"
+
+                        />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_che"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/che"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="撤单"
-                            android:layout_marginTop="7dp"
-                            style="@style/_666666_font_13sp"
+                    android:orientation="vertical">
 
-                            />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/che" />
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="撤单"
+
+                        />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_select"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/cha"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="查询"
-                            android:layout_marginTop="7dp"
-                            style="@style/_666666_font_13sp"
-                            />
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/cha" />
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="查询" />
 
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <include layout="@layout/sign_space_view"></include>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="全部资产：" />
+
+                    <TextView
+                        style="@style/_black_font_14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="10000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="80dp"
+                        android:gravity="center_vertical"
+                        android:text="可用资产："
+
+                        />
+
+                    <TextView
+                        style="@style/_black_font_14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="2000" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <include layout="@layout/sign_line_view"></include>
+
+            <money.com.gettingmoney.bai.view.ListViewForScrollView
+                android:id="@+id/mLvShopMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/background"
+                android:dividerHeight="1dp"
+                android:scrollbars="none"></money.com.gettingmoney.bai.view.ListViewForScrollView>
+
         </LinearLayout>
 
-        <include layout="@layout/sign_space_view"></include>
-
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="44dp"
-           android:background="@color/white"
-           android:padding="12dp"
-           >
-
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:orientation="horizontal">
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:text="全部资产："
-                   android:gravity="center_vertical"
-                   style="@style/_666666_font_13sp"
-                   />
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:text="10000"
-                   android:gravity="center_vertical"
-                   style="@style/_black_font_14sp"
-                   />
-               </LinearLayout>
-
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:layout_alignParentRight="true"
-                   android:orientation="horizontal"
-                   >
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:text="可用资产："
-                   android:layout_marginLeft="80dp"
-                   android:gravity="center_vertical"
-                   style="@style/_666666_font_13sp"
-
-                   />
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:text="2000"
-                   android:gravity="center_vertical"
-                   style="@style/_black_font_14sp"
-                   />
-               </LinearLayout>
-       </RelativeLayout>
-      <include layout="@layout/sign_line_view"></include>
-
-                <ListView
-                    android:id="@+id/mLvShopMore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@color/background"
-                    android:dividerHeight="1dp"
-                    android:scrollbars="none"
-                    ></ListView>
-
-   </LinearLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </money.com.gettingmoney.bai.main.view.ProgressLayout>

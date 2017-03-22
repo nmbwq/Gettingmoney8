@@ -3,6 +3,7 @@ package money.com.gettingmoney.util;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -124,6 +125,7 @@ public class MyXutils {
                     if(sta==1){
                         onSuccessResponse(result, callback);
                     }else{
+                        Log.d("Debug","返回的错误吗"+sta);
                         Toast.makeText(con, object.getString("msg"), Toast.LENGTH_SHORT).show();
                     }
                     if(dialog!=null){

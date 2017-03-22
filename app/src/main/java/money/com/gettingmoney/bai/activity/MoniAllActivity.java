@@ -57,12 +57,12 @@ public class MoniAllActivity extends BaseActivity {
     @InjectView(tv_select)
     TextView tvSelect;
     //用来确定跳那个界面的
-    int  type=2;
+    int  type=1;
 
     private List<Fragment> mFragments;
     private MoniAllFragmentAdapter mAdapter;
     // 记录当前选中的按钮id
-    private int textViewId = tv_zhang;
+      private int textViewId;
     /**
      * 头部黄色下划线
      */
@@ -95,7 +95,7 @@ public class MoniAllActivity extends BaseActivity {
         mAdapter = new MoniAllFragmentAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);
         //默认为1加载两个页面    为2的话加载三个页面
-        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setOffscreenPageLimit(1);
         //跳转到什么界面
         mViewPager.setCurrentItem(type);
 
@@ -183,7 +183,6 @@ public class MoniAllActivity extends BaseActivity {
     private void setTextColor(int id) {
         refreshAllColor();
         //只和点击事件有关系 和滑动没有关系
-        textViewId = tvZhang.getId();
         switch (id) {
             case tv_zhang:
                 tvZhang.setTextColor(ContextCompat.getColor(MoniAllActivity.this, R.color.themeColor));

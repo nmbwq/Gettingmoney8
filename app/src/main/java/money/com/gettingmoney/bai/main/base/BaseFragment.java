@@ -144,6 +144,11 @@ public abstract class BaseFragment extends Fragment {
             vLayout.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             vLayout.setOrientation(LinearLayout.VERTICAL);
         }
+        initWindow();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+//            local LayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+//        }
         vLayout.removeAllViews();
         viewLayout = LayoutInflater.from(getActivity().getBaseContext())
                 .inflate(layoutId, vLayout, false);
@@ -158,7 +163,7 @@ public abstract class BaseFragment extends Fragment {
             linearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.statusBarColor));
             vLayout.addView(toolBar, 0);
 //            这里是不添加toobar上面的高度
-//            vLayout.addView(linearLayout, 0);
+            vLayout.addView(linearLayout, 0);
         }
         vLayout.addView(viewLayout);
         if (ZhUtils.isNetworkConnected(getActivity()

@@ -39,12 +39,13 @@ public class NewsUtil implements INewsUtil {
      * @param callBack
      */
     @Override
-    public void commentList(int newsId, int currentPage, int pageSize, MyXutils.XCallBack callBack) {
-        String url = HOST+"news/commentList";
+    public void commentList(int newsId, int currentPage, int pageSize,String userNumber, MyXutils.XCallBack callBack) {
+        String url = HOST+"news/newsCommentList";
         Map<String, Object> map = new HashMap<>();
         map.put("newsId", newsId);
         map.put("currentPage", currentPage);
         map.put("pageSize", pageSize);
+        map.put("userNumber", userNumber);
         MyXutils.getInstance().post(null,url,map,callBack);
     }
 
@@ -57,7 +58,7 @@ public class NewsUtil implements INewsUtil {
      */
     @Override
     public void addComment(String userNumber, int newsId, String comment, MyXutils.XCallBack callBack) {
-        String url = HOST+"news/commentList";
+        String url = HOST+"news/addComment";
         Map<String, Object> map = new HashMap<>();
         map.put("newsId", newsId);
         map.put("userNumber", userNumber);
@@ -73,7 +74,7 @@ public class NewsUtil implements INewsUtil {
      */
     @Override
     public void delComment(String userNumber, int id, MyXutils.XCallBack callBack) {
-        String url = HOST+"news/commentList";
+        String url = HOST+"news/delComment";
         Map<String, Object> map = new HashMap<>();
         map.put("userNumber", userNumber);
         map.put("id", id);
@@ -82,16 +83,45 @@ public class NewsUtil implements INewsUtil {
 
     /**
      * 获取新闻详情
-     * @param id
+     * @param
      * @param userNumber
      * @param callBack
      */
     @Override
-    public void getNewsData(int id, String userNumber, MyXutils.XCallBack callBack) {
-        String url = HOST+"news/commentList";
+    public void getNewsData(int pageSize, int currentPage, String userNumber, int newsId, MyXutils.XCallBack callBack) {
+        String url = HOST+"news/appNewsData";
         Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
+        map.put("pageSize", pageSize);
+        map.put("currentPage", currentPage);
         map.put("userNumber", userNumber);
+        map.put("newsId", newsId);
         MyXutils.getInstance().post(null,url,map,callBack);
     }
+
+    /**
+     * 添加收藏
+     */
+
+    @Override
+    public void addCollection(String userNumber, int newsId, MyXutils.XCallBack callBack) {
+        String url = HOST+"news/addCollection";
+        Map<String, Object> map = new HashMap<>();
+        map.put("userNumber", userNumber);
+        map.put("newsId", newsId);
+        MyXutils.getInstance().post(null,url,map,callBack);
+    }
+    /**
+     * 删除收藏
+     */
+
+    @Override
+    public void delCollection(String userNumber, int id, MyXutils.XCallBack callBack) {
+        String url = HOST+"news/delCollection";
+        Map<String, Object> map = new HashMap<>();
+        map.put("userNumber", userNumber);
+        map.put("id", id);
+        MyXutils.getInstance().post(null,url,map,callBack);
+    }
+
+
 }

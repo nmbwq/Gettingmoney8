@@ -6,73 +6,77 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pullToRefreshScrollVie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
-        <include layout="@layout/sign_line_view"></include>
-        
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal"
-
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="股票名称"
-                android:gravity="center"
-                style="@style/_black_font_12sp"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="委托价/均价"
-                android:gravity="center"
-                style="@style/_black_font_12sp"
-
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="委托数/成交数"
-                android:gravity="center"
-                style="@style/_black_font_12sp"
-
-                />
-            <TextView
-                android:id="@+id/tv_qubie"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="状态时间"
-                android:gravity="center"
-                style="@style/_black_font_12sp"
-
-                />
-        </LinearLayout>
-
-        <include layout="@layout/sign_line_view"></include>
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/srl_message"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/mLvShopMore"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/background"
-            android:dividerHeight="1dp"
-            android:scrollbars="none"
-            ></ListView>
+            android:background="@color/background"
+            android:orientation="vertical">
 
-        </android.support.v4.widget.SwipeRefreshLayout>
-        
+            <include layout="@layout/sign_line_view"></include>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+
+                >
+
+                <TextView
+                    style="@style/_black_font_12sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="股票名称" />
+
+                <TextView
+                    style="@style/_black_font_12sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="委托价/均价"
+
+                    />
+
+                <TextView
+                    style="@style/_black_font_12sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="委托数/成交数"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_qubie"
+                    style="@style/_black_font_12sp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="状态时间"
+
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/sign_line_view"></include>
+
+            <money.com.gettingmoney.bai.view.ListViewForScrollView
+                android:id="@+id/mLvShopMore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/background"
+                android:dividerHeight="1dp"
+                android:scrollbars="none"></money.com.gettingmoney.bai.view.ListViewForScrollView>
+
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 </money.com.gettingmoney.bai.main.view.ProgressLayout>

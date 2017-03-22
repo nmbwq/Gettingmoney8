@@ -6,81 +6,88 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <LinearLayout
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pullToRefreshScrollVie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <include layout="@layout/sign_space_view"></include>
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@color/white"
-            android:padding="12dp"
-            >
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <TextView
+            <include layout="@layout/sign_space_view"></include>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white"
+                android:padding="12dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="全部资产："
-                    android:gravity="center_vertical"
-                    style="@style/_666666_font_13sp"
-                    />
-                <TextView
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="全部资产：" />
+
+                    <TextView
+                        style="@style/_black_font_14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="10000" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="10000"
-                    android:gravity="center_vertical"
-                    style="@style/_black_font_14sp"
-                    />
-            </LinearLayout>
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="可用资产："
-                    android:layout_marginLeft="80dp"
-                    android:gravity="center_vertical"
-                    style="@style/_666666_font_13sp"
+                    <TextView
+                        style="@style/_666666_font_13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="80dp"
+                        android:gravity="center_vertical"
+                        android:text="可用资产："
 
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="2000"
-                    android:gravity="center_vertical"
-                    style="@style/_black_font_14sp"
-                    />
-            </LinearLayout>
-        </RelativeLayout>
+                        />
 
-        <include layout="@layout/sign_line_view"></include>
+                    <TextView
+                        style="@style/_black_font_14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="2000" />
+                </LinearLayout>
+            </RelativeLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/srl_message"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/mLvShopMore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/background"
-            android:dividerHeight="1dp"
-            android:scrollbars="none"
-            ></ListView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            <include layout="@layout/sign_line_view"></include>
 
-    </LinearLayout>
+
+
+                <money.com.gettingmoney.bai.view.ListViewForScrollView
+                    android:id="@+id/mLvShopMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/background"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none">
+
+                </money.com.gettingmoney.bai.view.ListViewForScrollView>
+
+
+
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 </money.com.gettingmoney.bai.main.view.ProgressLayout>

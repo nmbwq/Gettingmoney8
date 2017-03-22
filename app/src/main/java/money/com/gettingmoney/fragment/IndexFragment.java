@@ -1,9 +1,9 @@
 package money.com.gettingmoney.fragment;
 
+
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +16,9 @@ import java.util.ArrayList;
 
 import money.com.gettingmoney.R;
 import money.com.gettingmoney.adapter.IndexAdapter;
+import money.com.gettingmoney.bai.main.base.BaseFragment;
 
-public class IndexFragment extends Fragment {
+public class IndexFragment extends BaseFragment implements View.OnClickListener {
 
     /**
      * 指数
@@ -44,6 +45,7 @@ public class IndexFragment extends Fragment {
         strings.add("其它指数");
         adapter = new IndexAdapter(getActivity(),strings);
         indexlistview.setAdapter(adapter);
+        initWindow();
         return view;
     }
 
@@ -77,6 +79,18 @@ public class IndexFragment extends Fragment {
                 });
 
     }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void requestInit() {
+
+    }
+
+
     private class DataTask extends AsyncTask<Void, Void, String[]> {
 
         @Override

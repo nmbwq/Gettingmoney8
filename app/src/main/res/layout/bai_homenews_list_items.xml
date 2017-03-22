@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -15,12 +16,14 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         >
-       <ImageView
-           android:id="@+id/image"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@mipmap/bai_homepage_finance"
-           />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImage="@mipmap/bai_deflult_photo"
+            android:layout_marginTop="8dp"
+            />
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -30,6 +33,7 @@
             android:layout_toRightOf="@+id/image"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="2dp"
+            android:layout_marginRight="45dp"
             />
         <TextView
             android:id="@+id/time"

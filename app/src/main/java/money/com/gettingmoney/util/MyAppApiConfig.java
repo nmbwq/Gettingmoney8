@@ -1,6 +1,7 @@
 package money.com.gettingmoney.util;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,16 +11,30 @@ import java.util.List;
 
 import money.com.gettingmoney.activity.MainActivity;
 
-public class MyAppApiConfig {
+
+public class MyAppApiConfig extends Application{
     private static List<Activity> activities;
+    public static Application application;
     //外网
 //    public static final String HOST_URL = "http://101.201.147.52:8071/";
 //    public static final String IMGHOST_URL = "http://101.201.147.52:8090";
     //内网
+
+
+
+//  向
+//    public static final String HOST_URL = "http://192.168.0.134:8090/";
+//    潘
     public static final String HOST_URL = "http://192.168.0.132:8077/";
+//    李
+//  public static final String HOST_URL = "http://192.168.0.125:8076/";
+
     public static final String IMGHOST_URL = "http://192.168.0.132:8071";
 
     public static MainActivity MAIN_ACTIVITY = null;
+
+
+
 
     /**
      * 把Activity放入集合当中，统一管理。

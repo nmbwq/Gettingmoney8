@@ -2,17 +2,21 @@ package money.com.gettingmoney.bai.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +32,27 @@ import money.com.gettingmoney.bai.main.base.BaseActivity;
 import money.com.gettingmoney.bai.main.base.MyToolBar;
 import money.com.gettingmoney.bai.main.view.ProgressLayout;
 import money.com.gettingmoney.bai.model.MoniStockHomeModel;
+import money.com.gettingmoney.bai.view.ListViewForScrollView;
 
 
 public class MoniStockHomeActivity extends BaseActivity /*implements OnActionListener */ {
-    @InjectView(R.id.mLvShopMore)
-    ListView mLvShopMore;
-    @InjectView(R.id.srl_message)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
+    @InjectView(R.id.ll_zhang)
+    LinearLayout llZhang;
+    @InjectView(R.id.ll_die)
+    LinearLayout llDie;
+    @InjectView(R.id.ll_chi)
+    LinearLayout llChi;
+    @InjectView(R.id.ll_che)
+    LinearLayout llChe;
+    @InjectView(R.id.ll_select)
+    LinearLayout llSelect;
+    @InjectView(R.id.mLvShopMore)
+    ListViewForScrollView mLvShopMore;
+    @InjectView(R.id.pullToRefreshScrollVie)
+    PullToRefreshScrollView pullToRefreshScrollVie;
 
 
     //
@@ -73,9 +89,61 @@ public class MoniStockHomeActivity extends BaseActivity /*implements OnActionLis
         setContentView(requestView(R.layout.bai_moni_stock_home));
         ButterKnife.inject(this);
         initEvent();
+        initListview();
+    }
+
+
+    private void initListview() {
+        progressLayout.setFocusable(true);
+        progressLayout.setFocusableInTouchMode(true);
+        progressLayout.requestFocus();
+        // 上拉、下拉设定
+        pullToRefreshScrollVie.setMode(PullToRefreshBase.Mode.BOTH);
+        // 下拉刷新 业务代码
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setTextTypeface(Typeface.SANS_SERIF);
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setReleaseLabel("放开我");
+        pullToRefreshScrollVie
+                .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page = 1;
+//                        xiala = 0;
+                        new DataTask().execute();
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page++;
+//                        xiala = 1;
+                        new DataTask().execute();
+                    }
+                });
 
     }
 
+    private class DataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            pullToRefreshScrollVie.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
+    }
     private void initEvent() {
         //进来时候的加载的转转 代替
 //        showSwipeRefresh(mSwipeRefreshLayout);//显示加载
@@ -329,17 +397,17 @@ public class MoniStockHomeActivity extends BaseActivity /*implements OnActionLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_zhang:
-                startActivity(new Intent(MoniStockHomeActivity.this,MoniAllActivity.class));
+                startActivity(new Intent(MoniStockHomeActivity.this, MoniAllActivity.class));
                 break;
             case R.id.ll_die:
-                startActivity(new Intent(MoniStockHomeActivity.this,MoniDetailActivity.class));
+                startActivity(new Intent(MoniStockHomeActivity.this, MoniDetailActivity.class));
                 break;
             case R.id.ll_chi:
-                alertDialog= BDialog.showDialog(MoniStockHomeActivity.this, R.layout.bai_dialog_pingcang, "", "", new View.OnClickListener() {
+                alertDialog = BDialog.showDialog(MoniStockHomeActivity.this, R.layout.bai_dialog_pingcang, "", "", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditText  editText = (EditText) alertDialog.findViewById(R.id.tv_number);
-                        Log.d("Debug","dialog上面填写的数量为"+editText.getText().toString());
+                        EditText editText = (EditText) alertDialog.findViewById(R.id.tv_number);
+                        Log.d("Debug", "dialog上面填写的数量为" + editText.getText().toString());
                         alertDialog.dismiss();
                     }
                 }, new View.OnClickListener() {

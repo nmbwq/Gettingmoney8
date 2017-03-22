@@ -5,158 +5,147 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical">
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_marginBottom="10dp"
+    >
 
-        <!--有弹性的ScrollView 实现下拉弹回和上拉弹回-->
-    <money.com.gettingmoney.bai.main.view.StretchScrollView
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/pullToRefreshScrollVie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="44dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    >
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="17dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/bai_homepage_component1" />
 
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="17dp"
-                        android:layout_height="15dp"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/bai_homepage_component1" />
+                <TextView
+                    style="@style/_black_font_16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/image"
+                    android:gravity="center_vertical"
+                    android:text="组件" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="41dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
-                        style="@style/_black_font_16sp"
+                        android:id="@+id/tv_zujian"
+                        style="@style/_999999_font_14sp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/image"
+                        android:layout_marginLeft="4dp"
                         android:gravity="center_vertical"
-                        android:text="组件" />
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="41dp"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_zujian"
-                            style="@style/_999999_font_14sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="4dp"
-                            android:gravity="center_vertical"
-                            android:text="组件管理" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <include layout="@layout/sign_line_view"></include>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="107dp"
-                    android:background="@color/white"
-                    android:paddingBottom="13dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="13dp">
-
-                    <GridView
-                        android:id="@+id/mZuJianList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:horizontalSpacing="10dp"
-                        android:numColumns="4"
-                        android:verticalSpacing="10dp"></GridView>
+                        android:text="组件管理" />
 
                 </LinearLayout>
 
-                <include layout="@layout/sign_space_view"></include>
+            </RelativeLayout>
 
+            <include layout="@layout/sign_line_view"></include>
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="107dp"
+                android:background="@color/white"
+                android:paddingBottom="13dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="13dp">
+
+                <GridView
+                    android:id="@+id/mZuJianList"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@color/white"
-                    android:padding="12dp">
+                    android:layout_height="wrap_content"
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="4"
+                    android:verticalSpacing="10dp"></GridView>
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@mipmap/bai_text_photo"
-                        />
-                </LinearLayout>
+            </LinearLayout>
 
-                <include layout="@layout/sign_space_view"></include>
+            <include layout="@layout/sign_space_view"></include>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                android:padding="12dp">
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="84dp"
-                    android:src="@mipmap/bai_homepage_banner" />
-
-                <include layout="@layout/sign_space_view"></include>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:src="@mipmap/bai_homepage_news" />
-
-                    <TextView
-                        style="@style/_black_font_16sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center_vertical"
-                        android:text="新闻资讯" />
-                </LinearLayout>
-
-                <include layout="@layout/sign_line_view"></include>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="450dp">
-
-                <ListView
-                    android:id="@+id/mLvShopMore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    ></ListView>
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/bai_text_photo" />
             </LinearLayout>
 
-    </money.com.gettingmoney.bai.main.view.StretchScrollView>
+            <include layout="@layout/sign_space_view"></include>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:src="@mipmap/bai_homepage_banner" />
+
+            <include layout="@layout/sign_space_view"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:src="@mipmap/bai_homepage_news" />
+
+                <TextView
+                    style="@style/_black_font_16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="新闻资讯" />
+            </LinearLayout>
+
+            <include layout="@layout/sign_line_view"></include>
 
 
+            <money.com.gettingmoney.bai.view.ListViewForScrollView
+                android:id="@+id/mLvShopMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"></money.com.gettingmoney.bai.view.ListViewForScrollView>
+        </LinearLayout>
+
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 </money.com.gettingmoney.bai.main.view.ProgressLayout>
 
 

@@ -1,12 +1,16 @@
 package money.com.gettingmoney.bai.activity;
 
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +24,21 @@ import money.com.gettingmoney.bai.main.base.BaseActivity;
 import money.com.gettingmoney.bai.main.base.MyToolBar;
 import money.com.gettingmoney.bai.main.view.ProgressLayout;
 import money.com.gettingmoney.bai.model.CJorWTModel;
+import money.com.gettingmoney.bai.view.ListViewForScrollView;
 
 
 public class CJorWTActivity extends BaseActivity /*implements OnActionListener */ {
     public static final String DISTINGUISH = "DISTINGUISH";
 
-    @InjectView(R.id.mLvShopMore)
-    ListView mLvShopMore;
-    @InjectView(R.id.srl_message)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @InjectView(R.id.pl_message)
     ProgressLayout progressLayout;
     @InjectView(R.id.tv_qubie)
     TextView tvQubie;
+    @InjectView(R.id.mLvShopMore)
+    ListViewForScrollView mLvShopMore;
+    @InjectView(R.id.pullToRefreshScrollVie)
+    PullToRefreshScrollView pullToRefreshScrollVie;
 
 
     //
@@ -75,16 +81,68 @@ public class CJorWTActivity extends BaseActivity /*implements OnActionListener *
         setContentView(requestView(R.layout.bai_moni_che));
         ButterKnife.inject(this);
         initEvent();
+        initListview();
 
     }
 
+    private void initListview() {
+        progressLayout.setFocusable(true);
+        progressLayout.setFocusableInTouchMode(true);
+        progressLayout.requestFocus();
+        // 上拉、下拉设定
+        pullToRefreshScrollVie.setMode(PullToRefreshBase.Mode.BOTH);
+        // 下拉刷新 业务代码
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setTextTypeface(Typeface.SANS_SERIF);
+        pullToRefreshScrollVie.getLoadingLayoutProxy()
+                .setReleaseLabel("放开我");
+        pullToRefreshScrollVie
+                .setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page = 1;
+//                        xiala = 0;
+                        new DataTask().execute();
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                        page++;
+//                        xiala = 1;
+                        new DataTask().execute();
+                    }
+                });
+
+    }
+
+    private class DataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            pullToRefreshScrollVie.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
+    }
     private void initEvent() {
         //进来时候的加载的转转 代替
 //        showSwipeRefresh(mSwipeRefreshLayout);//显示加载
 //        requeata();
-        if (type==1){
+        if (type == 1) {
             tvQubie.setText("方向/成交额");
-        }else {
+        } else {
             tvQubie.setText("交易状态");
         }
 
@@ -100,10 +158,10 @@ public class CJorWTActivity extends BaseActivity /*implements OnActionListener *
         mAdapter = new CommonAdapter<CJorWTModel>(CJorWTActivity.this, mList, R.layout.bai_moni_che_item) {
             @Override
             public void convert(ViewHolder baseViewHolder, CJorWTModel item) {
-                TextView view = (TextView)baseViewHolder.getView(R.id.tv_time);
-                if (type==1){
+                TextView view = (TextView) baseViewHolder.getView(R.id.tv_time);
+                if (type == 1) {
                     view.setText("125.0");
-                }else {
+                } else {
                     view.setText("完成");
                 }
             }

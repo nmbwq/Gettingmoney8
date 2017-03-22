@@ -62,6 +62,10 @@
                         android:gravity="center_vertical"
                         android:text="组件管理" />
 
+
+
+
+
                 </LinearLayout>
 
             </RelativeLayout>
@@ -90,17 +94,21 @@
             <include layout="@layout/sign_space_view"></include>
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:background="@color/white"
-                android:padding="12dp">
+              >
 
-                <ImageView
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/mLineChar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/bai_text_photo" />
-            </LinearLayout>
+                 />
+
+
+            </RelativeLayout>
 
             <include layout="@layout/sign_space_view"></include>
 

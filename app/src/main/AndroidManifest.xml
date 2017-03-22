@@ -71,6 +71,7 @@
         <activity android:name=".bai.activity.MoniDetailActivity" />
         <activity android:name=".bai.activity.CJorWTActivity" />
         <activity android:name=".bai.activity.NewsDetailActivity" />
+        <activity android:name=".bai.activity.SocketActivity" />
     </application>
 
 </manifest>

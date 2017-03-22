@@ -66,6 +66,7 @@ public class BusinessNewsActivity extends BaseActivity /*implements OnActionList
         super.onCreate(savedInstanceState);
         toolBar = new MyToolBar(this, "", "新闻列表", "");
         setContentView(requestView(R.layout.bai_news_list));
+//        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
         ButterKnife.inject(this);
         initEvent();
         initListview();

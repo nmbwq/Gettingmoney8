@@ -25,9 +25,12 @@ public class MyAppApiConfig extends Application{
 //  向
 //    public static final String HOST_URL = "http://192.168.0.134:8090/";
 //    潘
-    public static final String HOST_URL = "http://192.168.0.132:8077/";
+//    public static final String HOST_URL = "http://192.168.0.132:8077/";
 //    李
 //  public static final String HOST_URL = "http://192.168.0.125:8076/";
+
+   //socket 测试
+    public static final String HOST_URL = "http://192.168.0.132:8070/";
 
     public static final String IMGHOST_URL = "http://192.168.0.132:8071";
 
